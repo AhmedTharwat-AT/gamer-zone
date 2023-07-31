@@ -1,7 +1,9 @@
 function App() {
   return (
     <div className="App">
-      <header className="App-header">header</header>
+      <header className="App-header">
+        <p>hello from desktop</p>
+      </header>
     </div>
   );
 }
