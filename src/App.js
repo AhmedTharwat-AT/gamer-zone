@@ -5,7 +5,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p>hello from desktop</p>
-        <p>{process.env.REACT_APP_ApiKey}</p>
+        <p>Apikey : {Apikey}</p>
       </header>
     </div>
   );
