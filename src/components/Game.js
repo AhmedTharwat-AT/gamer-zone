@@ -1,6 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 export default function Game({ game }) {
+  const [hoverElement, setHoverElement] = useState({
+    height: null,
+    hovered: "",
+  });
   function displayPlatforms() {
     let extra = 0;
     const arr = game.parent_platforms.map((p, i, a) => {
@@ -21,9 +26,24 @@ export default function Game({ game }) {
     return arr;
   }
 
+  function handleHoverGame(e) {
+    const height = e.target.closest(".game").children[0].offsetHeight;
+    console.log(height);
+    setHoverElement({ height, hovered: "selected" });
+  }
+
+  function handleUnHoverGame(e) {
+    setHoverElement({ height: null, hovered: "" });
+  }
+
   return (
-    <div className="game">
-      <div className="game-wrapper ">
+    <div
+      className={`game ${hoverElement.hovered && "selected"}`}
+      style={{ height: hoverElement.height }}
+      onMouseEnter={handleHoverGame}
+      onMouseLeave={handleUnHoverGame}
+    >
+      <div className="game-wrapper">
         <div className="game-media">
           <img src={game.background_image} alt={game.name} />
         </div>

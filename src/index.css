@@ -56,8 +56,7 @@ input:focus {
 
 .main-wrapper {
   background-color: var(--main-color);
-
-  height: 100%;
+  height: fit-content;
 }
 
 .main {
@@ -205,17 +204,17 @@ input:focus {
 }
 
 /* hover a game =------------------------------------------ */
-.game:hover .info-hidden-wrapper {
+.game.selected .info-hidden-wrapper {
   display: block;
   opacity: 1;
 }
 
-.game:hover .game-wrapper {
+.game.selected .game-wrapper {
   transform: scale(1.02);
   z-index: 500;
 }
 
-.game:hover .game-wrapper {
+.game.selected .game-wrapper {
   position: absolute;
 }
 /* ------------------------------------------ */
@@ -226,6 +225,7 @@ input:focus {
   justify-content: space-around;
   margin-top: 28px;
   transition: 0.3s;
+  font-size: 0.9rem;
 }
 
 .game-info-hidden div {
@@ -235,8 +235,11 @@ input:focus {
   display: flex;
   justify-content: space-between;
 }
+
 .game-info-hidden div:last-child {
   border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .add-fav-btn {
