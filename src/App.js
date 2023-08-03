@@ -30,6 +30,7 @@ library.add(
 function App() {
   const Apikey = process.env.REACT_APP_ApiKey;
   const [data, setData] = useState(null);
+  const [showElement, setShowElement] = useState(false);
 
   async function getData(
     url = `https://rawg.io/api/games?key=${Apikey}&page=1&page_size=16`
@@ -43,6 +44,18 @@ function App() {
     getData();
   }, []);
 
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth > 900) {
+        setShowElement(true);
+      } else {
+        setShowElement(false);
+      }
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <div className="App">
       {data ? (
@@ -50,7 +63,7 @@ function App() {
           <div className="container">
             <div className="main">
               <Header />
-              <Sidebar />
+              {showElement && <Sidebar />}
               <Content data={data} />
             </div>
           </div>

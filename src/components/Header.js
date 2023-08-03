@@ -6,8 +6,10 @@ export default function Header() {
         <li className="search">
           <input type="text" placeholder="enter game name"></input>
         </li>
-        <li>Library 💼</li>
-        <li>Welcome , Ahmed</li>
+        <li className="header-tabs">
+          <span className="library">Library 💼</span>
+          <span className="welcome-user">Welcome , Ahmed</span>
+        </li>
       </ul>
     </div>
   );

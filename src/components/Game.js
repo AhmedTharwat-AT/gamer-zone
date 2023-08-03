@@ -1,11 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { func } from "prop-types";
+import { useEffect, useState } from "react";
 
 export default function Game({ game }) {
   const [hoverElement, setHoverElement] = useState({
     height: null,
-    hovered: "",
+    hovered: false,
   });
+  const [gameVideo, setGameVideo] = useState(null);
+
   function displayPlatforms() {
     let extra = 0;
     const arr = game.parent_platforms.map((p, i, a) => {
@@ -26,14 +29,34 @@ export default function Game({ game }) {
     return arr;
   }
 
+  async function fetchVideo() {
+    const res = await fetch(
+      `https://api.rawg.io/api/games/3498/movies?key=${process.env.REACT_APP_ApiKey}`
+    );
+    const data = await res.json();
+    const rand = Math.round(Math.random() * 8);
+    setGameVideo(data.results[rand].data?.["480"]);
+  }
+
+  function playVideo(video) {
+    gameVideo || fetchVideo();
+    video.play();
+  }
+
   function handleHoverGame(e) {
-    const height = e.target.closest(".game").children[0].offsetHeight;
-    console.log(height);
-    setHoverElement({ height, hovered: "selected" });
+    const gameElement = e.target.closest(".game");
+    const videoElement = gameElement.querySelector(".game-video");
+    const height = gameElement.children[0].offsetHeight;
+    setHoverElement({ height, hovered: true });
+    playVideo(videoElement);
   }
 
   function handleUnHoverGame(e) {
-    setHoverElement({ height: null, hovered: "" });
+    const gameElement = e.target.closest(".game");
+    const videoElement = gameElement.querySelector(".game-video");
+    videoElement.currentTime = 0;
+    !videoElement.paused && videoElement.pause();
+    setHoverElement({ height: null, hovered: false });
   }
 
   return (
@@ -45,6 +68,9 @@ export default function Game({ game }) {
     >
       <div className="game-wrapper">
         <div className="game-media">
+          {hoverElement.hovered &&
+            (gameVideo == null || <div className="spinner"></div>)}
+          <video className={`game-video`} src={gameVideo} muted loop></video>
           <img src={game.background_image} alt={game.name} />
         </div>
         <div className="game-info">
