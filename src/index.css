@@ -270,6 +270,7 @@ input:focus {
   width: 100%;
   height: 100%;
   backdrop-filter: blur(3px);
+  z-index: 8;
 }
 
 .spinner::after {
@@ -383,4 +384,16 @@ input:focus {
 
 .add-fav-btn:hover {
   background-color: var(--light-color);
+}
+
+/* sidebar ----------------------------------------------------------------------------- */
+
+.sidebar {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    display: none;
+  }
 }

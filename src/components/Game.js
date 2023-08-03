@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { func } from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Game({ game }) {
   const [hoverElement, setHoverElement] = useState({
@@ -8,6 +8,7 @@ export default function Game({ game }) {
     hovered: false,
   });
   const [gameVideo, setGameVideo] = useState(null);
+  const videoEl = useRef();
 
   function displayPlatforms() {
     let extra = 0;
@@ -29,39 +30,38 @@ export default function Game({ game }) {
     return arr;
   }
 
-  async function fetchVideo() {
-    const res = await fetch(
-      `https://api.rawg.io/api/games/3498/movies?key=${process.env.REACT_APP_ApiKey}`
-    );
-    const data = await res.json();
-    const rand = Math.round(Math.random() * 8);
-    data && setGameVideo(data?.results[rand].data?.["480"]);
-  }
-
-  function playVideo(video) {
-    gameVideo || fetchVideo();
-    video.play();
+  async function fetchVideo(video) {
+    if (!gameVideo) {
+      try {
+        const res = await fetch(
+          `https://api.rawg.io/api/games/3498/movies?key=${process.env.REACT_APP_ApiKey}`
+        );
+        const data = await res.json();
+        const rand = Math.round(Math.random() * 8);
+        setGameVideo(data?.results[rand].data?.["480"]);
+      } catch (e) {
+        console.error("dont swap quickly");
+      }
+    }
+    setTimeout(() => video.play(), 0);
   }
 
   function handleHoverGame(e) {
     const gameElement = e.target.closest(".game");
-    const videoElement = gameElement.querySelector(".game-video");
     const height = gameElement.children[0].offsetHeight;
-    setHoverElement({ height, hovered: true });
-    playVideo(videoElement);
+    !hoverElement.hovered && setHoverElement({ height, hovered: true });
+    fetchVideo(videoEl.current);
   }
 
-  function handleUnHoverGame(e) {
-    const gameElement = e.target.closest(".game");
-    const videoElement = gameElement.querySelector(".game-video");
-    videoElement.currentTime != 0 && videoElement.pause();
-    videoElement.currentTime = 0;
+  function handleUnHoverGame() {
+    videoEl.current.currentTime !== 0 && videoEl.current.pause();
+    videoEl.current.currentTime = 0;
     setHoverElement({ height: null, hovered: false });
   }
 
   return (
     <div
-      className={`game ${hoverElement.hovered && "selected"}`}
+      className={`game ${hoverElement.hovered ? "selected" : ""}`}
       style={{ height: hoverElement.height }}
       onMouseEnter={handleHoverGame}
       onMouseLeave={handleUnHoverGame}
@@ -69,8 +69,14 @@ export default function Game({ game }) {
       <div className="game-wrapper">
         <div className="game-media">
           {hoverElement.hovered &&
-            (gameVideo == null || <div className="spinner"></div>)}
-          <video className={`game-video`} src={gameVideo} muted loop></video>
+            (!gameVideo ? <div className="spinner"></div> : null)}
+          <video
+            className={`game-video`}
+            ref={videoEl}
+            src={gameVideo}
+            muted
+            loop
+          ></video>
           <img src={game.background_image} alt={game.name} />
         </div>
         <div className="game-info">

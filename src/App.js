@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Content from "./components/Content";
@@ -31,7 +31,7 @@ library.add(
 function App() {
   const Apikey = process.env.REACT_APP_ApiKey;
   const [data, setData] = useState(null);
-  const [showElement, setShowElement] = useState(false);
+  const parent = useRef();
 
   async function getData(
     url = `https://rawg.io/api/games?key=${Apikey}&page=1&page_size=16`
@@ -45,26 +45,14 @@ function App() {
     getData();
   }, []);
 
-  useEffect(() => {
-    function handleResize() {
-      if (window.innerWidth > 900) {
-        setShowElement(true);
-      } else {
-        setShowElement(false);
-      }
-    }
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <div className="App">
+    <div className="App" ref={parent}>
       {data ? (
         <div className="main-wrapper">
           <div className="container">
             <Header />
             <div className="main">
-              {showElement && <Sidebar />}
+              <Sidebar />
               <Content data={data} />
             </div>
             <Footer />
