@@ -35,7 +35,7 @@ export default function Game({ game }) {
     );
     const data = await res.json();
     const rand = Math.round(Math.random() * 8);
-    setGameVideo(data.results[rand].data?.["480"]);
+    data && setGameVideo(data?.results[rand].data?.["480"]);
   }
 
   function playVideo(video) {
@@ -54,8 +54,8 @@ export default function Game({ game }) {
   function handleUnHoverGame(e) {
     const gameElement = e.target.closest(".game");
     const videoElement = gameElement.querySelector(".game-video");
+    videoElement.currentTime != 0 && videoElement.pause();
     videoElement.currentTime = 0;
-    !videoElement.paused && videoElement.pause();
     setHoverElement({ height: null, hovered: false });
   }
 

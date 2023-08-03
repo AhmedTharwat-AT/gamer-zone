@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 import { faN, faMobile, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import Footer from "./components/Footer";
 library.add(
   fab,
   faPlaystation,
@@ -61,11 +62,12 @@ function App() {
       {data ? (
         <div className="main-wrapper">
           <div className="container">
+            <Header />
             <div className="main">
-              <Header />
               {showElement && <Sidebar />}
               <Content data={data} />
             </div>
+            <Footer />
           </div>
         </div>
       ) : (
