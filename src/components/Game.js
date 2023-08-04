@@ -30,10 +30,6 @@ export default function Game({ game }) {
     return arr;
   }
 
-  function test() {
-    console.log("test");
-  }
-
   async function fetchVideo(video) {
     if (!gameVideo) {
       try {
