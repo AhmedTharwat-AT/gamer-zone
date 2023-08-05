@@ -53,7 +53,7 @@ function App() {
             <Header />
             <div className="main">
               <Sidebar />
-              <Content data={data} />
+              <Content data={data} getData={getData} Apikey={Apikey} />
             </div>
             <Footer />
           </div>

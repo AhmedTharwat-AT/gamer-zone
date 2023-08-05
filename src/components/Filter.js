@@ -1,3 +1,11 @@
 export default function Filter() {
-  return <h1>filter............</h1>;
+  return (
+    <div className="filter">
+      <select>
+        <option></option>
+        <option></option>
+        <option></option>
+      </select>
+    </div>
+  );
 }
