@@ -18,6 +18,7 @@
 }
 body {
   background-color: var(--main-color);
+  /* overflow: hidden; */
 }
 
 .container {
@@ -61,13 +62,14 @@ input:focus {
   min-width: fit-content;
   min-height: fit-content;
   padding-bottom: 50px;
+  overflow: hidden;
 }
 
 .main {
   display: grid;
   width: 100%;
   min-height: 100vh;
-  min-width: 300px;
+  min-width: 370px;
   grid-template-columns: 250px 1fr;
   grid-template-rows: 1fr;
   gap: 20px;
@@ -175,13 +177,13 @@ input:focus {
 @media (max-width: 1250px) {
   .games-list {
     grid-template-columns: repeat(2, 350px);
+    justify-content: center;
   }
 }
 
 @media (max-width: 900px) {
   .games-list {
     grid-template-columns: minmax(300px, 600px);
-    justify-content: center;
     padding: 3px;
   }
 }
@@ -390,14 +392,10 @@ input:focus {
   width: 100%;
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 20px 15px;
   margin: 30px 0;
-}
-@media (max-width: 600px) {
-  .page-btns {
-    padding: 5px 0px;
-    margin: 30px 0;
-  }
+  height: 5.5rem;
 }
 .page-btns .btn {
   padding: 3px 7px;
@@ -406,10 +404,25 @@ input:focus {
   font-weight: 900;
   font-size: 1.1rem;
   min-width: 100px;
+  height: 100%;
   border-radius: 7px;
   border: none;
   cursor: pointer;
   background-color: var(--trd-color);
+}
+
+@media (max-width: 500px) {
+  .page-btns {
+    padding: 5px 0px;
+    margin: 30px 0;
+    justify-content: space-between;
+    height: 3rem;
+  }
+
+  .page-btns .btn {
+    font-size: 1rem;
+    min-width: 80px;
+  }
 }
 
 .page-btns .btn:hover {
@@ -418,7 +431,7 @@ input:focus {
 
 .page-btns .btn.disabled {
   cursor: initial;
-  color: #aaa;
+  color: #bbb;
 }
 
 .page-btns .btn.disabled:hover {
@@ -438,7 +451,21 @@ input:focus {
   padding: 10px 15px;
   cursor: pointer;
   margin-right: 7px;
+  font-size: 1.1rem;
 }
+@media (max-width: 500px) {
+  .page-num {
+    height: 2.5rem;
+    padding: 2px;
+  }
+
+  .page-num span {
+    padding: 7px 12px;
+    margin-right: 5px;
+    font-size: 0.89rem;
+  }
+}
+
 .page-num span:hover {
   background-color: rgba(119, 119, 119, 0.219);
   border-radius: 7px;
