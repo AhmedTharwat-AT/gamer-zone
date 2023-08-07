@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { func } from "prop-types";
 import { useEffect, useRef, useState } from "react";
+import Platforms from "./Platforms";
 
 export default function Game({ game, onClickGame }) {
   const [hoverElement, setHoverElement] = useState({
@@ -9,26 +10,6 @@ export default function Game({ game, onClickGame }) {
   });
   const [gameVideo, setGameVideo] = useState(null);
   const videoEl = useRef();
-
-  function displayPlatforms() {
-    let extra = 0;
-    const arr = game.parent_platforms.map((p, i, a) => {
-      let platform = (p.platform.name + "").split(" ")[0].toLowerCase();
-      let str = `fa-brands fa-${platform}`;
-      if (platform == "pc") str = `fa-brands fa-windows`;
-      if (platform == "ios") str = `fa-icons fa-mobile`;
-      if (platform == "web") str = `fa-icons fa-globe`;
-      if (platform == "nintendo") str = `fa-icons fa-n`;
-
-      return (
-        <span key={str}>
-          <FontAwesomeIcon icon={str} size="sm" />
-        </span>
-      );
-    });
-
-    return arr;
-  }
 
   async function fetchVideo(video) {
     if (!gameVideo) {
@@ -81,7 +62,9 @@ export default function Game({ game, onClickGame }) {
           <img src={game.background_image} alt={game.name} />
         </div>
         <div className="game-info">
-          <div className="platforms">{displayPlatforms()}</div>
+          <div className="platforms">
+            <Platforms plat={game.parent_platforms} />
+          </div>
           <h1> {game.name}</h1>
           <button className="add-fav-btn">+ {game.added}</button>
           <div className="info-hidden-wrapper">

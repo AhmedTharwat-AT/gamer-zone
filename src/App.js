@@ -14,7 +14,13 @@ import {
   faLinux,
   faAndroid,
 } from "@fortawesome/free-brands-svg-icons";
-import { faN, faMobile, faGlobe } from "@fortawesome/free-solid-svg-icons";
+import {
+  faN,
+  faMobile,
+  faGlobe,
+  faBriefcase,
+  faPlusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 library.add(
   fab,
   faPlaystation,
@@ -25,7 +31,9 @@ library.add(
   faAndroid,
   faN,
   faMobile,
-  faGlobe
+  faGlobe,
+  faBriefcase,
+  faPlusCircle
 );
 
 function App() {
