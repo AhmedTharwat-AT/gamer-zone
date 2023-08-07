@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { func } from "prop-types";
 import { useEffect, useRef, useState } from "react";
 
-export default function Game({ game }) {
+export default function Game({ game, onClickGame }) {
   const [hoverElement, setHoverElement] = useState({
     height: null,
     hovered: false,
@@ -65,6 +65,7 @@ export default function Game({ game }) {
       style={{ height: hoverElement.height }}
       onMouseEnter={handleHoverGame}
       onMouseLeave={handleUnHoverGame}
+      onClick={() => onClickGame(game.id)}
     >
       <div className="game-wrapper">
         <div className="game-media">
@@ -81,7 +82,7 @@ export default function Game({ game }) {
         </div>
         <div className="game-info">
           <div className="platforms">{displayPlatforms()}</div>
-          <h1>Name : {game.name}</h1>
+          <h1> {game.name}</h1>
           <button className="add-fav-btn">+ {game.added}</button>
           <div className="info-hidden-wrapper">
             <div className="game-info-hidden">

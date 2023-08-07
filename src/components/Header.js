@@ -1,8 +1,10 @@
-export default function Header() {
+export default function Header({ setCurrGame }) {
   return (
     <div className="header">
       <ul>
-        <li className="logo">G | Z</li>
+        <li onClick={() => setCurrGame(false)}>
+          <h1 className="logo"> G | Z</h1>
+        </li>
         <li className="search">
           <input type="text" placeholder="enter game name"></input>
         </li>
