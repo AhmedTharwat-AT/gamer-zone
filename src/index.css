@@ -61,7 +61,6 @@ input:focus {
 .main-wrapper {
   min-width: fit-content;
   min-height: 100%;
-  overflow: hidden;
   position: relative;
 }
 
@@ -69,7 +68,7 @@ input:focus {
   display: grid;
   width: 100%;
   min-height: 100vh;
-  height: 100%;
+  height: 4000px;
   min-width: 370px;
   grid-template-columns: 250px 1fr;
   /* grid-template-rows: 1fr; */
@@ -589,12 +588,39 @@ input:focus {
 
 .sidebar {
   display: block;
+  position: relative;
 }
 
 @media (max-width: 900px) {
   .sidebar {
     display: none;
   }
+}
+
+.side-list {
+  position: relative;
+  height: 1500px;
+  border: 1px solid red;
+}
+
+.side-start {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  background-color: green;
+}
+.side-end {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background-color: yellow;
+}
+
+.side-list.fixed {
+  position: sticky;
+  top: 0px;
 }
 
 /* footer-------------------------------------- */

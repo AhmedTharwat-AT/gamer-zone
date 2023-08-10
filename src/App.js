@@ -40,7 +40,6 @@ function App() {
   const Apikey = process.env.REACT_APP_ApiKey;
   const [data, setData] = useState(null);
   const [currGame, setCurrGame] = useState(null);
-  const currImg = useRef();
 
   async function getData(
     url = `https://rawg.io/api/games?key=${Apikey}&page=1&page_size=16`
