@@ -46,7 +46,10 @@ export default function Game({ game, onClickGame }) {
       style={{ height: hoverElement.height }}
       onMouseEnter={handleHoverGame}
       onMouseLeave={handleUnHoverGame}
-      onClick={() => onClickGame(game.id)}
+      onClick={() => {
+        handleUnHoverGame();
+        onClickGame(game.id);
+      }}
     >
       <div className="game-wrapper">
         <div className="game-media">

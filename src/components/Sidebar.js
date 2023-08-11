@@ -12,11 +12,9 @@ export default function Sidebar() {
 
     const observerStart = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        console.log("hey top inter");
         setSidePosition({ position: "sticky", top: -3 });
       }
       if (!entry.isIntersecting) {
-        console.log("hey top not inter");
         setSidePosition({
           position: "relative",
           top: sideList.current.offsetTop,
@@ -25,11 +23,9 @@ export default function Sidebar() {
     });
     const observerEnd = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
-        console.log("hey bot inter");
         setSidePosition({ position: "sticky", top: -addStickyRatio + 10 });
       }
       if (!entry.isIntersecting) {
-        console.log("hey bot not inter");
         setSidePosition({
           position: "relative",
           top: sideList.current.offsetTop,
