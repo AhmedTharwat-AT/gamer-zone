@@ -4,6 +4,7 @@ import { useState } from "react";
 
 export default function GamesDetails({ game }) {
   const [hovered, setHovered] = useState(null);
+  const [showMore, setShowMore] = useState(false);
   console.log(game);
   const reactions = {
     exceptional: "🎯",
@@ -89,7 +90,7 @@ export default function GamesDetails({ game }) {
                   <div
                     key={el.title}
                     className={`${el.title} ${
-                      hovered == el.title ? "hovered" : null
+                      hovered == el.title ? "hovered" : ""
                     } bar`}
                     style={{
                       width: calcRateWidth(el.title),
@@ -107,7 +108,7 @@ export default function GamesDetails({ game }) {
                     <div
                       key={el.title}
                       className={`bubble ${
-                        hovered == el.title ? "hovered" : null
+                        hovered == el.title ? "hovered" : ""
                       }`}
                       onMouseEnter={() => setHovered(el.title)}
                       onMouseLeave={() => setHovered(null)}
@@ -118,6 +119,98 @@ export default function GamesDetails({ game }) {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+          </div>
+          <div className="-left-about">
+            <div className="about-head">
+              <h2>About</h2>
+              <p>
+                {showMore
+                  ? game.description_raw
+                  : game.description_raw.slice(
+                      0,
+                      game.description_raw.length / 4
+                    ) + "..."}
+              </p>
+              <span onClick={() => setShowMore((s) => !s)}>
+                {showMore ? "Show less" : "Read more"}
+              </span>
+            </div>
+            <div className="about-sections ">
+              <div className="about-section">
+                <h4>Platforms</h4>
+                <div>
+                  {game.platforms.map((el, i, arr) => (
+                    <span key={el.platform.id} className="underline-high">
+                      {i == arr.length - 1
+                        ? el.platform.name
+                        : el.platform.name + ","}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="about-section">
+                <h4>metascore</h4>
+                <div>
+                  <span className="metascore">{game.metacritic}</span>
+                </div>
+              </div>
+              <div className="about-section">
+                <h4>genre</h4>
+                <div className="">
+                  {game.genres?.map((el, i, arr) => (
+                    <span className="underline-high" key={el.id}>
+                      {i == arr.length - 1 ? el.name : el.name + ","}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="about-section">
+                <h4>release date</h4>
+                <div className="">
+                  {new Date(game.released)
+                    .toDateString()
+                    .split(" ")
+                    .slice(1)
+                    .join(" ")}
+                </div>
+              </div>
+              <div className="about-section">
+                <h4>developer</h4>
+                <div className="">
+                  {game.developers?.map((el, i, arr) => (
+                    <span className="underline-high" key={el.id}>
+                      {i == arr.length - 1 ? el.name : el.name + ","}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="about-section">
+                <h4>publisher</h4>
+                <div className="">
+                  {game.publishers?.map((el) => (
+                    <span className="underline-high" key={el.id}>
+                      {el.name}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="about-section about-section-full">
+                <h4>tags</h4>
+                <div className="">
+                  {game.tags?.map((el, i, arr) => (
+                    <span className="underline-high" key={el.id}>
+                      {i == arr.length - 1 ? el.name : el.name + ","}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className=" about-section about-section-full">
+                <h4>website</h4>
+                <div className="">
+                  <span className="underline-high">{game.website}</span>
+                </div>
               </div>
             </div>
           </div>

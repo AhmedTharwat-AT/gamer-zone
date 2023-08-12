@@ -65,8 +65,11 @@ export default function Game({ game, onClickGame }) {
           <img src={game.background_image} alt={game.name} />
         </div>
         <div className="game-info">
-          <div className="platforms">
-            <Platforms plat={game.parent_platforms} />
+          <div className="game-info-head">
+            <div className="platforms">
+              <Platforms plat={game.parent_platforms} />
+            </div>
+            <span className="metascore">{game.metacritic}</span>
           </div>
           <h1> {game.name}</h1>
           <button className="add-fav-btn">+ {game.added}</button>
