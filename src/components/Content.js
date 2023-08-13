@@ -33,7 +33,7 @@ export default function Content({
   return (
     <div className="content">
       {currGame ? (
-        <GamesDetails game={currGame} />
+        <GamesDetails game={currGame} Apikey={Apikey} />
       ) : (
         <>
           <Filter />

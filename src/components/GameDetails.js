@@ -1,17 +1,30 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Platforms from "./Platforms";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Section from "./Section";
 
-export default function GamesDetails({ game }) {
+export default function GamesDetails({ game, Apikey }) {
   const [hovered, setHovered] = useState(null);
   const [showMore, setShowMore] = useState(false);
-  console.log(game);
+  const [screenshots, setScreenshots] = useState(null);
   const reactions = {
     exceptional: "🎯",
     recommended: "👍",
     meh: "😑",
     skip: "👎",
   };
+
+  async function fetchScreenshots() {
+    const res = await fetch(
+      `https://api.rawg.io/api/games/${game.id}/screenshots?key=${Apikey}`
+    );
+    const d = await res.json();
+    setScreenshots(d);
+    console.log(screenshots);
+  }
+  useEffect(() => {
+    fetchScreenshots();
+  }, []);
 
   function calcRateWidth(rate) {
     return (
@@ -150,68 +163,53 @@ export default function GamesDetails({ game }) {
                   ))}
                 </div>
               </div>
-              <div className="about-section">
-                <h4>metascore</h4>
-                <div>
-                  <span className="metascore">{game.metacritic}</span>
-                </div>
-              </div>
-              <div className="about-section">
-                <h4>genre</h4>
-                <div className="">
-                  {game.genres?.map((el, i, arr) => (
-                    <span className="underline-high" key={el.id}>
-                      {i == arr.length - 1 ? el.name : el.name + ","}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="about-section">
-                <h4>release date</h4>
-                <div className="">
-                  {new Date(game.released)
-                    .toDateString()
-                    .split(" ")
-                    .slice(1)
-                    .join(" ")}
-                </div>
-              </div>
-              <div className="about-section">
-                <h4>developer</h4>
-                <div className="">
-                  {game.developers?.map((el, i, arr) => (
-                    <span className="underline-high" key={el.id}>
-                      {i == arr.length - 1 ? el.name : el.name + ","}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="about-section">
-                <h4>publisher</h4>
-                <div className="">
-                  {game.publishers?.map((el) => (
-                    <span className="underline-high" key={el.id}>
-                      {el.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="about-section about-section-full">
-                <h4>tags</h4>
-                <div className="">
-                  {game.tags?.map((el, i, arr) => (
-                    <span className="underline-high" key={el.id}>
-                      {i == arr.length - 1 ? el.name : el.name + ","}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className=" about-section about-section-full">
-                <h4>website</h4>
-                <div className="">
-                  <span className="underline-high">{game.website}</span>
-                </div>
-              </div>
+              <Section
+                classOne=""
+                classTwo="metascore"
+                title="metascore"
+                data={game.metacritic}
+              />
+              <Section
+                classOne=""
+                classTwo="underline-high"
+                title="genre"
+                data={game.genres}
+              />
+              <Section
+                classOne=""
+                classTwo=""
+                title="release date"
+                data={new Date(game.released)
+                  .toDateString()
+                  .split(" ")
+                  .slice(1)
+                  .join(" ")}
+              />
+              <Section
+                classOne=""
+                classTwo="underline-high"
+                title="developer"
+                data={game.developers}
+              />
+
+              <Section
+                classOne=""
+                classTwo="underline-high"
+                title="publisher"
+                data={game.publishers}
+              />
+              <Section
+                classOne="about-section-full"
+                classTwo="underline-high"
+                title="tags"
+                data={game.tags}
+              />
+              <Section
+                classOne="about-section-full"
+                classTwo="underline-high"
+                title="website"
+                data={game.website}
+              />
             </div>
           </div>
         </div>
