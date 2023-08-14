@@ -7,25 +7,25 @@ export default function Content({
   data,
   onClickGame,
   currGame,
-  getData,
+  handlePagination,
   Apikey,
 }) {
   const allPages = Math.ceil(data.count / 16);
   let currPage = useRef(1);
 
   function handleNextPage() {
-    data.next && getData(data.next);
+    data.next && handlePagination(data.next);
     data.next && currPage.current++;
   }
   function handlePreviousPage() {
-    data.previous && getData(data.previous);
+    data.previous && handlePagination(data.previous);
     data.previous && currPage.current--;
   }
 
   function handleCurrPage(e) {
     if (e.target.localName !== "span") return;
     currPage.current = Number(e.target.innerText);
-    getData(
+    handlePagination(
       `https://rawg.io/api/games?key=${Apikey}&page=${currPage.current}&page_size=16`
     );
   }

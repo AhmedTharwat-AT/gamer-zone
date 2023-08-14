@@ -1,7 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Platforms from "./Platforms";
 import { useEffect, useState } from "react";
+import Platforms from "./Platforms";
 import Section from "./Section";
+import Stores from "./Stores";
 
 export default function GamesDetails({ game, Apikey }) {
   const [hovered, setHovered] = useState(null);
@@ -20,11 +21,36 @@ export default function GamesDetails({ game, Apikey }) {
     );
     const d = await res.json();
     setScreenshots(d);
-    console.log(screenshots);
   }
+
   useEffect(() => {
+    console.log(game);
     fetchScreenshots();
   }, []);
+
+  function displayImages(data) {
+    let arr;
+    if (data.length > 4) {
+      arr = data.slice(0, 5).map((el, i, ar) =>
+        i == 4 ? (
+          <span>
+            <img className="last-img" src={ar[i - 1].image}></img>
+          </span>
+        ) : (
+          <span>
+            <img src={el.image}></img>
+          </span>
+        )
+      );
+    } else {
+      arr = data.map((el) => (
+        <span>
+          <img src={el.image}></img>
+        </span>
+      ));
+    }
+    return arr;
+  }
 
   function calcRateWidth(rate) {
     return (
@@ -74,17 +100,25 @@ export default function GamesDetails({ game, Apikey }) {
             <div className="-rate-high">
               <div className="-high">
                 <div className="-high-title">
-                  <h1>
-                    {
-                      game.ratings.reduce((acc, curr) =>
-                        curr.count > acc.count ? curr : acc
-                      ).title
-                    }{" "}
-                  </h1>
-                  <span>🎯</span>
+                  {game.ratings.length > 0 ? (
+                    <>
+                      <h1>
+                        {
+                          game.ratings?.reduce((acc, curr) =>
+                            curr.count > acc.count ? curr : acc
+                          ).title
+                        }{" "}
+                      </h1>
+                      <span>🎯</span>
+                    </>
+                  ) : (
+                    <h1>There Are No Ratings</h1>
+                  )}
                 </div>
                 <span className="underline-low">
-                  {game.ratings.reduce((acc, curr) => curr.count + acc, 0)}{" "}
+                  {game.ratings.length > 0
+                    ? game.ratings?.reduce((acc, curr) => curr.count + acc, 0)
+                    : "NO"}{" "}
                   RATINGS
                 </span>
               </div>
@@ -99,39 +133,41 @@ export default function GamesDetails({ game, Apikey }) {
             </div>
             <div className="-rate-percent">
               <div className="percent-bar">
-                {game.ratings.map((el) => (
-                  <div
-                    key={el.title}
-                    className={`${el.title} ${
-                      hovered == el.title ? "hovered" : ""
-                    } bar`}
-                    style={{
-                      width: calcRateWidth(el.title),
-                    }}
-                    onMouseEnter={() => setHovered(el.title)}
-                    onMouseLeave={() => setHovered(null)}
-                  >
-                    <span>{reactions[el.title]}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="percent-bubbles">
-                {game.ratings.map((el) => {
-                  return (
+                {game.ratings.length > 0 &&
+                  game.ratings.map((el) => (
                     <div
                       key={el.title}
-                      className={`bubble ${
+                      className={`${el.title} ${
                         hovered == el.title ? "hovered" : ""
-                      }`}
+                      } bar`}
+                      style={{
+                        width: calcRateWidth(el.title),
+                      }}
                       onMouseEnter={() => setHovered(el.title)}
                       onMouseLeave={() => setHovered(null)}
                     >
-                      <span className={`${el.title} dot`}></span>
-                      <h4>{el.title}</h4>
-                      <span className="bubble-count">{el.count}</span>
+                      <span>{reactions[el.title]}</span>
                     </div>
-                  );
-                })}
+                  ))}
+              </div>
+              <div className="percent-bubbles">
+                {game.ratings.length > 0 &&
+                  game.ratings.map((el) => {
+                    return (
+                      <div
+                        key={el.title}
+                        className={`bubble ${
+                          hovered == el.title ? "hovered" : ""
+                        }`}
+                        onMouseEnter={() => setHovered(el.title)}
+                        onMouseLeave={() => setHovered(null)}
+                      >
+                        <span className={`${el.title} dot`}></span>
+                        <h4>{el.title}</h4>
+                        <span className="bubble-count">{el.count}</span>
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>
@@ -167,7 +203,7 @@ export default function GamesDetails({ game, Apikey }) {
                 classOne=""
                 classTwo="metascore"
                 title="metascore"
-                data={game.metacritic}
+                data={game.metacritic ? game.metacritic : "N-R"}
               />
               <Section
                 classOne=""
@@ -208,12 +244,20 @@ export default function GamesDetails({ game, Apikey }) {
                 classOne="about-section-full"
                 classTwo="underline-high"
                 title="website"
-                data={game.website}
+                data={game.website ? game.website : "there are no website"}
               />
             </div>
           </div>
         </div>
-        <div className="-main-right"></div>
+        <div className="-main-right">
+          <div className="right-media">
+            {screenshots && displayImages(screenshots.results)}
+          </div>
+          <div className="right-stores">
+            <h2>Where to buy</h2>
+            {<Stores stores={game.stores} />}
+          </div>
+        </div>
       </div>
     </div>
   );

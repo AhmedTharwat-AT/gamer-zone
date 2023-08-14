@@ -48,7 +48,7 @@ export default function Game({ game, onClickGame }) {
       onMouseLeave={handleUnHoverGame}
       onClick={() => {
         handleUnHoverGame();
-        onClickGame(game.id);
+        setTimeout(() => onClickGame(game.id), 0);
       }}
     >
       <div className="game-wrapper">
@@ -69,7 +69,9 @@ export default function Game({ game, onClickGame }) {
             <div className="platforms">
               <Platforms plat={game.parent_platforms} />
             </div>
-            <span className="metascore">{game.metacritic}</span>
+            <span className="metascore">
+              {game.metacritic ? game.metacritic : "N-R"}
+            </span>
           </div>
           <h1> {game.name}</h1>
           <button className="add-fav-btn">+ {game.added}</button>

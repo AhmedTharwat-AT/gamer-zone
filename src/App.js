@@ -20,6 +20,7 @@ import {
   faGlobe,
   faBriefcase,
   faPlusCircle,
+  faGamepad,
 } from "@fortawesome/free-solid-svg-icons";
 library.add(
   fab,
@@ -33,7 +34,8 @@ library.add(
   faMobile,
   faGlobe,
   faBriefcase,
-  faPlusCircle
+  faPlusCircle,
+  faGamepad
 );
 
 function App() {
@@ -47,6 +49,10 @@ function App() {
     const res = await fetch(url);
     const d = await res.json();
     return d;
+  }
+
+  function handlePagination(url) {
+    getData(url).then((d) => setData(d));
   }
 
   useEffect(() => {
@@ -78,14 +84,14 @@ function App() {
               <Sidebar />
               <Content
                 data={data}
-                getData={getData}
+                handlePagination={handlePagination}
                 currGame={currGame}
                 onClickGame={handleClickGame}
                 Apikey={Apikey}
               />
             </div>
-            <Footer />
           </div>
+          <Footer />
         </div>
       ) : (
         <h2>LOADING</h2>
