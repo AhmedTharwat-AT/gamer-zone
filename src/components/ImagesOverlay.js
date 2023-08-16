@@ -5,7 +5,6 @@ export default function ImagesOverlay({ imgs, setImgOverlay }) {
   const [imgCounter, setImgCounter] = useState(0);
 
   useEffect(() => {
-    console.log(imgs.results);
     setSelectedImg(imgs.results[0].image);
   }, []);
 

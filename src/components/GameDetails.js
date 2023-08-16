@@ -1,14 +1,15 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Platforms from "./Platforms";
 import Section from "./Section";
 import Stores from "./Stores";
+import Developers from "./Developers";
 
 export default function GamesDetails({ game, Apikey, setImgOverlay }) {
   const [hovered, setHovered] = useState(null);
   const [showMore, setShowMore] = useState(false);
   const [screenshots, setScreenshots] = useState(null);
-  const [achieve, setAchieves] = useState(null);
+  const [developers, setDevelopers] = useState(null);
   const reactions = {
     exceptional: "🎯",
     recommended: "👍",
@@ -28,8 +29,11 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
       `https://api.rawg.io/api/games/${game.id}/screenshots?key=${Apikey}`
     ).then((d) => setScreenshots(d));
     getData(
-      `https://api.rawg.io/api/games/${game.id}/achievements?key=${Apikey}`
-    ).then((d) => setAchieves(d));
+      `https://api.rawg.io/api/games/${game.id}/development-team?key=${Apikey}&page_size=11`
+    ).then((d) => {
+      console.log(d);
+      setDevelopers(d);
+    });
   }, []);
 
   function displayImages(data) {
@@ -67,10 +71,6 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
 
   function handleClickImg(e) {
     if (e.target.localName === "div") return;
-    // let img = null;
-    // e.target.children.length == 1
-    //   ? (img = e.target.children[0])
-    //   : (img = e.target);
     screenshots && setImgOverlay(screenshots);
   }
 
@@ -283,6 +283,20 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
           <div className="right-stores">
             <h2>Where to buy</h2>
             {<Stores stores={game.stores} />}
+          </div>
+        </div>
+      </div>
+      <div className="developers-container">
+        <div className="dev-count">
+          <h2>{game.name} created by </h2>
+          <span>{developers && developers.count} Creators</span>
+        </div>
+        <div className="developers">
+          <div className="dev-wrapper">
+            {developers &&
+              developers.results.map((dev) => (
+                <Developers key={dev.id} dev={dev} />
+              ))}
           </div>
         </div>
       </div>
