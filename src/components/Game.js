@@ -12,26 +12,30 @@ export default function Game({ game, onClickGame }) {
   const videoEl = useRef();
 
   async function fetchVideo(video) {
-    if (!gameVideo) {
-      try {
-        const res = await fetch(
-          `https://api.rawg.io/api/games/3498/movies?key=${process.env.REACT_APP_ApiKey}`
-        );
-        const data = await res.json();
-        const rand = Math.round(Math.random() * 8);
-        setGameVideo(data?.results[rand].data?.["480"]);
-      } catch (e) {
-        console.error("dont swap quickly");
-      }
+    try {
+      const res = await fetch(
+        `https://api.rawg.io/api/games/3498/movies?key=${process.env.REACT_APP_ApiKey}`
+      );
+      const data = await res.json();
+      const rand = Math.round(Math.random() * 8);
+      setGameVideo(data?.results[rand].data?.["480"]);
+    } catch (e) {
+      console.error("dont swap quickly");
     }
-    setTimeout(() => video.play(), 0);
+  }
+
+  function playVideo(video) {
+    if (!gameVideo) {
+      fetchVideo(video);
+    }
+    setTimeout(() => video.paused && video.play(), 0);
   }
 
   function handleHoverGame(e) {
     const gameElement = e.target.closest(".game");
     const height = gameElement.children[0].offsetHeight;
     !hoverElement.hovered && setHoverElement({ height, hovered: true });
-    fetchVideo(videoEl.current);
+    playVideo(videoEl.current);
   }
 
   function handleUnHoverGame() {

@@ -5,6 +5,7 @@ export default function Platforms({ plat, size = "sm" }) {
   function checkPlatName(nam) {
     let str = "";
     if (nam == "pc") return (str = `fa-brands fa-windows`);
+    if (nam == "gog") return (str = `fa-brands fa-windows`);
     if (nam == "ios") return (str = `fa-icons fa-mobile`);
     if (nam == "app") return (str = `fa-icons fa-mobile`);
     if (nam == "web") return (str = `fa-icons fa-globe`);
@@ -30,7 +31,11 @@ export default function Platforms({ plat, size = "sm" }) {
 
       return (
         <span key={str}>
-          <FontAwesomeIcon icon={str} size={size} />
+          <FontAwesomeIcon
+            key={Math.random() * str.length}
+            icon={str}
+            size={size}
+          />
         </span>
       );
     });
@@ -39,7 +44,11 @@ export default function Platforms({ plat, size = "sm" }) {
     let str = verifyPlatType(platform);
     data = (
       <span key={str}>
-        <FontAwesomeIcon icon={str} size={size} />
+        <FontAwesomeIcon
+          key={Math.random() * str.length}
+          icon={str}
+          size={size}
+        />
       </span>
     );
   }

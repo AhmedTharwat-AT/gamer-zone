@@ -4,10 +4,11 @@ import Platforms from "./Platforms";
 import Section from "./Section";
 import Stores from "./Stores";
 
-export default function GamesDetails({ game, Apikey }) {
+export default function GamesDetails({ game, Apikey, setImgOverlay }) {
   const [hovered, setHovered] = useState(null);
   const [showMore, setShowMore] = useState(false);
   const [screenshots, setScreenshots] = useState(null);
+  const [achieve, setAchieves] = useState(null);
   const reactions = {
     exceptional: "🎯",
     recommended: "👍",
@@ -15,17 +16,20 @@ export default function GamesDetails({ game, Apikey }) {
     skip: "👎",
   };
 
-  async function fetchScreenshots() {
-    const res = await fetch(
-      `https://api.rawg.io/api/games/${game.id}/screenshots?key=${Apikey}`
-    );
+  async function getData(url) {
+    const res = await fetch(url);
     const d = await res.json();
-    setScreenshots(d);
+    return d;
   }
 
   useEffect(() => {
     console.log(game);
-    fetchScreenshots();
+    getData(
+      `https://api.rawg.io/api/games/${game.id}/screenshots?key=${Apikey}`
+    ).then((d) => setScreenshots(d));
+    getData(
+      `https://api.rawg.io/api/games/${game.id}/achievements?key=${Apikey}`
+    ).then((d) => setAchieves(d));
   }, []);
 
   function displayImages(data) {
@@ -33,18 +37,18 @@ export default function GamesDetails({ game, Apikey }) {
     if (data.length > 4) {
       arr = data.slice(0, 5).map((el, i, ar) =>
         i == 4 ? (
-          <span>
+          <span key={el.id}>
             <img className="last-img" src={ar[i - 1].image}></img>
           </span>
         ) : (
-          <span>
+          <span key={el.id}>
             <img src={el.image}></img>
           </span>
         )
       );
     } else {
       arr = data.map((el) => (
-        <span>
+        <span key={el.id}>
           <img src={el.image}></img>
         </span>
       ));
@@ -60,6 +64,16 @@ export default function GamesDetails({ game, Apikey }) {
       }, 0) + "%"
     );
   }
+
+  function handleClickImg(e) {
+    if (e.target.localName === "div") return;
+    // let img = null;
+    // e.target.children.length == 1
+    //   ? (img = e.target.children[0])
+    //   : (img = e.target);
+    screenshots && setImgOverlay(screenshots);
+  }
+
   return (
     <div className="details">
       <div className="details-main">
@@ -73,7 +87,7 @@ export default function GamesDetails({ game, Apikey }) {
                 .join(" ")}
             </div>
             <div className="-head-platforms">
-              <Platforms plat={game.parent_platforms} />
+              <Platforms key="-head-platforms" plat={game.parent_platforms} />
             </div>
             <div className="-head-playtime">
               Average Playtime : {game.playtime} hours
@@ -85,13 +99,19 @@ export default function GamesDetails({ game, Apikey }) {
               <button>
                 <span>Add to</span> Library
                 <span className="-btns-icon">
-                  <FontAwesomeIcon icon="fa-solid fa-circle-plus" />
+                  <FontAwesomeIcon
+                    key="Library"
+                    icon="fa-solid fa-circle-plus"
+                  />
                 </span>
               </button>
               <button>
                 <span>Add to</span> Wishlist
                 <span className="-btns-icon">
-                  <FontAwesomeIcon icon="fa-solid fa-briefcase" />
+                  <FontAwesomeIcon
+                    key="Wishlist"
+                    icon="fa-solid fa-briefcase"
+                  />
                 </span>
               </button>
             </div>
@@ -203,18 +223,21 @@ export default function GamesDetails({ game, Apikey }) {
                 classOne=""
                 classTwo="metascore"
                 title="metascore"
+                key="metascore"
                 data={game.metacritic ? game.metacritic : "N-R"}
               />
               <Section
                 classOne=""
                 classTwo="underline-high"
                 title="genre"
+                key="genre"
                 data={game.genres}
               />
               <Section
                 classOne=""
                 classTwo=""
                 title="release date"
+                key="release date"
                 data={new Date(game.released)
                   .toDateString()
                   .split(" ")
@@ -225,6 +248,7 @@ export default function GamesDetails({ game, Apikey }) {
                 classOne=""
                 classTwo="underline-high"
                 title="developer"
+                key="developer"
                 data={game.developers}
               />
 
@@ -232,25 +256,28 @@ export default function GamesDetails({ game, Apikey }) {
                 classOne=""
                 classTwo="underline-high"
                 title="publisher"
+                key="publisher"
                 data={game.publishers}
               />
               <Section
                 classOne="about-section-full"
                 classTwo="underline-high"
                 title="tags"
+                key="tags"
                 data={game.tags}
               />
               <Section
                 classOne="about-section-full"
                 classTwo="underline-high"
                 title="website"
+                key="website"
                 data={game.website ? game.website : "there are no website"}
               />
             </div>
           </div>
         </div>
         <div className="-main-right">
-          <div className="right-media">
+          <div className="right-media" onClick={handleClickImg}>
             {screenshots && displayImages(screenshots.results)}
           </div>
           <div className="right-stores">

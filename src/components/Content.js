@@ -9,6 +9,7 @@ export default function Content({
   currGame,
   handlePagination,
   Apikey,
+  setImgOverlay,
 }) {
   const allPages = Math.ceil(data.count / 16);
   let currPage = useRef(1);
@@ -33,11 +34,19 @@ export default function Content({
   return (
     <div className="content">
       {currGame ? (
-        <GamesDetails game={currGame} Apikey={Apikey} />
+        <GamesDetails
+          setImgOverlay={setImgOverlay}
+          game={currGame}
+          Apikey={Apikey}
+        />
       ) : (
         <>
           <Filter />
-          <GamesList games={data.results} onClickGame={onClickGame} />
+          <GamesList
+            games={data.results}
+            onClickGame={onClickGame}
+            setImgOverlay={setImgOverlay}
+          />
           <div className="page-btns">
             <button
               className={`btn previous ${data.previous ? "" : "disabled"}`}

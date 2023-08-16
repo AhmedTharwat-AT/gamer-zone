@@ -1040,7 +1040,180 @@ input:focus {
   opacity: 0.9;
 }
 
+/* images overlay */
+
+.imgs-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-overlay {
+  align-self: flex-end;
+  padding-right: 50px;
+  padding-top: 20px;
+}
+
+@media (max-width: 972px) {
+  .close-overlay {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0;
+  }
+
+  .imgs-overlay {
+    justify-content: center;
+  }
+}
+
+.close-overlay > div {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #222;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.close-overlay span {
+  display: block;
+  font-size: 4rem;
+  transition: 0.3s;
+}
+
+@media (max-width: 767px) {
+  .close-overlay > div {
+    width: 80px;
+    height: 80px;
+  }
+  .close-overlay span {
+    font-size: 6rem;
+  }
+}
+
+.close-overlay > div:hover {
+  background-color: #fff;
+}
+
+.close-overlay > div:hover span {
+  color: #222;
+}
+
+.curr-img-wrapper {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-btn {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  top: 0;
+}
+
+.left-btn {
+  left: 0;
+}
+.right-btn {
+  right: 0;
+}
+
+.right-btn span,
+.left-btn span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 4rem;
+  opacity: 0.7;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  line-height: 40px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.right-btn span {
+  right: 10%;
+}
+.left-btn span {
+  left: 10%;
+}
+
+.right-btn span:hover,
+.left-btn span:hover {
+  color: black;
+  background-color: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.curr-img {
+  width: 80%;
+}
+
+@media (max-width: 1200px) {
+  .curr-img {
+    width: 100%;
+  }
+}
+
+.curr-img img {
+  width: 100%;
+}
+
+.all-imgs {
+  width: 100%;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  padding: 20px;
+  margin-top: 20px;
+  overflow-x: scroll;
+}
+
+.all-imgs::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 972px) {
+  .all-imgs {
+    display: none;
+  }
+}
+
+.all-imgs img {
+  width: 150px;
+  margin-right: 20px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: 0.3s;
+  border-radius: 7px;
+}
+
+.selected-img,
+.all-imgs img:hover {
+  opacity: 1 !important;
+}
+
 /* right stores */
+
 .right-stores {
   margin-top: 50px;
 }

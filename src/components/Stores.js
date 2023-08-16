@@ -13,7 +13,7 @@ export default function Stores({ stores }) {
           onClick={() => handleOpenStorePage(el.store.domain)}
         >
           <h2>{el.store.name}</h2>
-          <Platforms plat={el.store.name} size="xl" />
+          <Platforms plat={el.store.name} key={el.id} size="xl" />
         </div>
       ))}
     </div>

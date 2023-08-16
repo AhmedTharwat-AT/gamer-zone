@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Sidebar from "./components/Sidebar";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
-import GamesDetails from "./components/GameDetails";
+import ImagesOverlay from "./components/ImagesOverlay";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -42,6 +42,7 @@ function App() {
   const Apikey = process.env.REACT_APP_ApiKey;
   const [data, setData] = useState(null);
   const [currGame, setCurrGame] = useState(null);
+  const [imgOverlay, setImgOverlay] = useState(null);
 
   async function getData(
     url = `https://rawg.io/api/games?key=${Apikey}&page=1&page_size=16`
@@ -78,6 +79,9 @@ function App() {
               className="curr-game-image"
             ></div>
           ) : null}
+          {imgOverlay ? (
+            <ImagesOverlay setImgOverlay={setImgOverlay} imgs={imgOverlay} />
+          ) : null}
           <div className="container">
             <Header setCurrGame={setCurrGame} />
             <div className="main">
@@ -86,6 +90,7 @@ function App() {
                 data={data}
                 handlePagination={handlePagination}
                 currGame={currGame}
+                setImgOverlay={setImgOverlay}
                 onClickGame={handleClickGame}
                 Apikey={Apikey}
               />
