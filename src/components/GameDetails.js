@@ -291,14 +291,8 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
           <h2>{game.name} created by </h2>
           <span>{developers && developers.count} Creators</span>
         </div>
-        <div className="developers">
-          <div className="dev-wrapper">
-            {developers &&
-              developers.results.map((dev) => (
-                <Developers key={dev.id} dev={dev} />
-              ))}
-          </div>
-        </div>
+
+        {developers && <Developers developers={developers.results} />}
       </div>
     </div>
   );

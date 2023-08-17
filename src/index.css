@@ -252,7 +252,7 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 12px;
+  padding: 12px 0px;
   flex-direction: column;
 }
 
@@ -1082,7 +1082,7 @@ input:focus {
 @media (max-width: 972px) {
   .close-overlay {
     position: absolute;
-    top: 100px;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
     padding: 0;
@@ -1312,44 +1312,111 @@ input:focus {
   text-decoration: underline;
 }
 
+@media (max-width: 767px) {
+  .dev-count {
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
+.devs-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.dev-btns {
+  height: 30px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 2rem;
+  padding: 0px 30px;
+}
+@media (max-width: 767px) {
+  .dev-btns {
+    justify-content: space-around;
+  }
+}
+
+.dev-right-btn,
+.dev-left-btn {
+  transition: 0.3s;
+  cursor: pointer;
+  padding: 2px 10px;
+}
+
+.dev-right-btn:hover {
+  animation: rightBounce 0.5s infinite ease-in-out alternate;
+}
+.dev-left-btn:hover {
+  animation: leftBounce 0.5s infinite ease-in-out alternate;
+}
+@keyframes leftBounce {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(-10px);
+  }
+}
+@keyframes rightBounce {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(10px);
+  }
+}
+
 .developers {
   margin: auto;
-  max-width: 960px;
+  max-width: calc(315px * 3 + 30px);
   overflow-x: scroll;
 }
 
-@media (max-width: 1300px) and (min-width: 1100px) {
+.developers::-webkit-scrollbar {
+  height: 7px;
+}
+
+.developers::-webkit-scrollbar-track {
+  background: var(--main-color);
+  border-radius: 7px;
+  padding: 2px;
+}
+.developers::-webkit-scrollbar-thumb {
+  background: var(--light-color);
+  border-radius: 7px;
+}
+
+@media (max-width: 1300px) {
   .developers {
-    max-width: 800px;
+    max-width: calc(315px * 2 + 30px);
   }
 }
-@media (max-width: 1000px) {
-  .developers {
-    max-width: 700px;
-  }
-}
+
 @media (max-width: 767px) {
   .developers {
-    max-width: 500px;
-  }
-}
-@media (max-width: 565px) {
-  .developers {
-    max-width: 320px;
+    max-width: 315px;
   }
 }
 
 .dev-wrapper {
-  padding: 15px;
+  padding: 15px 0px;
   display: flex;
-  gap: 20px;
+  gap: 15px;
   justify-content: space-evenly;
   width: fit-content;
+  transition: 0.3s;
 }
 
 .dev {
   display: block;
-  width: 300px;
+  width: 315px;
   height: 410px;
   padding: 18px;
   display: flex;
