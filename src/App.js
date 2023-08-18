@@ -43,6 +43,8 @@ function App() {
   const [data, setData] = useState(null);
   const [currGame, setCurrGame] = useState(null);
   const [imgOverlay, setImgOverlay] = useState(null);
+  const [searchName, setSearchName] = useState("");
+  const [resetPageToOne, setResetPageToOne] = useState(false);
 
   async function getData(
     url = `https://rawg.io/api/games?key=${Apikey}&page=1&page_size=16`
@@ -52,8 +54,18 @@ function App() {
     return d;
   }
 
+  function resetData() {
+    if (data?.count < 852000 || data.previous)
+      getData().then((d) => setData(d));
+    searchName && setSearchName("");
+    currGame && setCurrGame(null);
+    setResetPageToOne(true);
+  }
+
   function handlePagination(url) {
+    resetPageToOne && setResetPageToOne(false);
     getData(url).then((d) => setData(d));
+    window.scrollTo(0, 0);
   }
 
   useEffect(() => {
@@ -61,10 +73,10 @@ function App() {
   }, []);
 
   function handleClickGame(gId) {
-    console.log(gId);
     getData(`https://rawg.io/api/games/${gId}?key=${Apikey}`).then((d) =>
       setCurrGame(d)
     );
+    window.scrollTo(0, 0);
   }
 
   return (
@@ -85,19 +97,24 @@ function App() {
           ) : null}
           <div className="container">
             <Header
+              Apikey={Apikey}
+              setData={setData}
               setCurrGame={setCurrGame}
               onClickGame={handleClickGame}
-              Apikey={Apikey}
+              setSearchName={setSearchName}
+              resetData={resetData}
             />
             <div className="main">
               <Sidebar />
               <Content
+                Apikey={Apikey}
                 data={data}
                 handlePagination={handlePagination}
                 currGame={currGame}
+                searchName={searchName}
                 setImgOverlay={setImgOverlay}
                 onClickGame={handleClickGame}
-                Apikey={Apikey}
+                resetPageToOne={resetPageToOne}
               />
             </div>
           </div>

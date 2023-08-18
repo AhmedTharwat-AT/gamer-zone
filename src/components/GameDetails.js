@@ -30,16 +30,13 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
     ).then((d) => setScreenshots(d));
     getData(
       `https://api.rawg.io/api/games/${game.id}/development-team?key=${Apikey}&page_size=11`
-    ).then((d) => {
-      console.log(d);
-      setDevelopers(d);
-    });
+    ).then((d) => setDevelopers(d));
   }, [game]);
 
   function displayImages(data) {
     let arr;
     if (data.length > 4) {
-      arr = data.slice(0, 5).map((el, i, ar) =>
+      arr = data?.slice(0, 5).map((el, i, ar) =>
         i == 4 ? (
           <span key={el.id}>
             <img className="last-img" src={ar[i - 1].image}></img>
@@ -51,7 +48,7 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
         )
       );
     } else {
-      arr = data.map((el) => (
+      arr = data?.map((el) => (
         <span key={el.id}>
           <img src={el.image}></img>
         </span>
@@ -278,7 +275,7 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
         </div>
         <div className="-main-right">
           <div className="right-media" onClick={handleClickImg}>
-            {screenshots && displayImages(screenshots.results)}
+            {screenshots && displayImages(screenshots?.results)}
           </div>
           <div className="right-stores">
             <h2>Where to buy</h2>
@@ -286,14 +283,16 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
           </div>
         </div>
       </div>
-      <div className="developers-container">
-        <div className="dev-count">
-          <h2>{game.name} created by </h2>
-          <span>{developers && developers.count} Creators</span>
-        </div>
+      {developers?.count != 0 && (
+        <div className="developers-container">
+          <div className="dev-count">
+            <h2>{game.name} created by </h2>
+            <span>{developers && developers?.count} Creators</span>
+          </div>
 
-        {developers && <Developers developers={developers.results} />}
-      </div>
+          <Developers developers={developers?.results} />
+        </div>
+      )}
     </div>
   );
 }

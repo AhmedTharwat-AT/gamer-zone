@@ -1,6 +1,13 @@
 import { useEffect, useState } from "react";
 import Platforms from "./Platforms";
-export default function Header({ setCurrGame, Apikey, onClickGame }) {
+export default function Header({
+  setCurrGame,
+  Apikey,
+  onClickGame,
+  setData,
+  setSearchName,
+  resetData,
+}) {
   const [isDark, setIsDark] = useState(true);
   const [searchInput, setSearchInput] = useState("");
   const [allGames, setAllGames] = useState(null);
@@ -23,11 +30,10 @@ export default function Header({ setCurrGame, Apikey, onClickGame }) {
     setSearchInput("");
   }
 
-  // to close results if didnt chose a result
+  // to close results when click outside search results
   useEffect(() => {
     doc.addEventListener("click", (e) => {
       if (e.target.localName == "input") return;
-      console.log(e.target);
       closeResults();
     });
   }, []);
@@ -37,21 +43,29 @@ export default function Header({ setCurrGame, Apikey, onClickGame }) {
     fetch(`https://rawg.io/api/games?key=${Apikey}&search=${searchInput}`)
       .then((r) => r.json())
       .then((data) => setAllGames(data));
-    console.log(screenWidth);
   }, [searchInput]);
 
   function handleClickResult(e) {
     const clicked = e.target.closest(".result");
     if (!clicked) return;
     onClickGame(clicked.dataset.key);
-    setAllGames(null);
-    setSearchInput("");
+    closeResults();
+  }
+
+  function handleShowAllResults() {
+    setData(allGames);
+    setSearchName(searchInput);
+  }
+
+  function handleLogoClick() {
+    allGames && closeResults();
+    resetData();
   }
 
   return (
     <div className="header">
       <ul>
-        <li onClick={() => setCurrGame(null)}>
+        <li onClick={handleLogoClick}>
           <h1 className="logo"> G | Z</h1>
         </li>
         <li>
@@ -72,18 +86,45 @@ export default function Header({ setCurrGame, Apikey, onClickGame }) {
                 &times;
               </span>
             )}
-            <div className="search-results" onClick={handleClickResult}>
-              {allGames &&
-                allGames.results.map((game) => {
-                  return (
-                    <div key={game.id} data-key={game.id} className="result">
-                      <img src={game.background_image}></img>
-                      <div>
-                        <span>{game.name}</span>
-                      </div>
-                    </div>
-                  );
-                })}
+            <div
+              className="search-results"
+              style={searchInput ? { padding: "7px" } : {}}
+              onClick={handleClickResult}
+            >
+              {allGames && searchInput != "" && (
+                <>
+                  <span className="results-count">
+                    Games results : {allGames.count}
+                  </span>
+                  {allGames.results
+                    .map((game) => {
+                      return (
+                        <div
+                          key={game.id}
+                          data-key={game.id}
+                          className="result"
+                        >
+                          <img src={game.background_image}></img>
+                          <div>
+                            <span>{game.name}</span>
+                          </div>
+                        </div>
+                      );
+                    })
+                    .slice(0, 10)}
+                  {allGames.results.length > 10 ? (
+                    <>
+                      <hr></hr>
+                      <span
+                        className="show-all-results"
+                        onClick={handleShowAllResults}
+                      >
+                        Show All
+                      </span>
+                    </>
+                  ) : null}
+                </>
+              )}
             </div>
           </div>
         </li>

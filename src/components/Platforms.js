@@ -4,14 +4,15 @@ export default function Platforms({ plat, size = "sm" }) {
   let data;
   function checkPlatName(nam) {
     let str = "";
-    if (nam == "pc") return (str = `fa-brands fa-windows`);
-    if (nam == "gog") return (str = `fa-brands fa-windows`);
-    if (nam == "itch.io") return (str = `fa-brands fa-windows`);
+    if (nam == "pc" || nam == "gog" || nam == "itch.io")
+      return (str = `fa-brands fa-windows`);
     if (nam == "ios") return (str = `fa-icons fa-mobile`);
     if (nam == "app") return (str = `fa-icons fa-mobile`);
     if (nam == "web") return (str = `fa-icons fa-globe`);
     if (nam == "nintendo") return (str = `fa-icons fa-n`);
-    if (nam == "epic") return (str = `fa-solid fa-gamepad`);
+    if (nam == "epic" || nam == "sega" || nam == "commodore" || nam == "atari")
+      return (str = `fa-solid fa-gamepad`);
+
     return nam;
   }
 

@@ -253,15 +253,30 @@ input:focus {
 
 .search-results {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   width: 60vw;
-  background-color: #333;
+  gap: 5px;
+  background-color: #222;
   bottom: 0;
   transform: translateY(calc(100% + 5px));
   border-radius: 5px;
-  display: flex;
-  flex-direction: column;
   z-index: 1000;
-  gap: 5px;
+}
+
+.show-all-results,
+.results-count {
+  padding: 7px;
+}
+
+.show-all-results {
+  text-decoration: underline;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.show-all-results:hover {
+  transform: translateX(5px);
 }
 
 .result {
@@ -302,19 +317,20 @@ input:focus {
 /* search of phones */
 
 .search.small {
-  background-color: #333;
-  position: absolute;
+  background-color: #222;
+  position: fixed;
   flex-direction: column;
-  min-height: 100%;
+  min-height: 100vh;
   top: 0;
   left: 0;
   z-index: 1001;
-  padding-top: 15px;
+  padding: 15px;
 }
 
 .search.small input {
   position: fixed;
   z-index: 10000;
+  width: calc(100% - 16px);
 }
 
 .small .search-results {
@@ -330,6 +346,7 @@ input:focus {
   position: fixed;
   z-index: 10000;
   top: 17px;
+  right: 13px;
 }
 
 /* content ------------------------------------------------ */
@@ -343,10 +360,10 @@ input:focus {
 }
 
 .games-list {
-  width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 15px;
+  width: 100%;
 }
 
 @media (max-width: 1413px) {
@@ -385,7 +402,27 @@ input:focus {
 
 .game-media {
   position: relative;
+  height: 13rem;
   transition: 0.3s;
+}
+
+@media (max-width: 1413px) {
+  .game-media {
+    height: 15rem;
+  }
+}
+
+@media (max-width: 1250px) {
+  .game-media {
+    height: 13rem;
+  }
+}
+
+@media (max-width: 1100px) {
+  .game-media {
+    height: 100%;
+    max-height: 20rem;
+  }
 }
 
 .game-media:after {
@@ -411,29 +448,10 @@ input:focus {
 
 .game-media img {
   width: 100%;
-  height: 13rem;
+  height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
   aspect-ratio: 6 / 3;
-}
-
-@media (max-width: 1413px) {
-  .game-media img {
-    height: 15rem;
-  }
-}
-
-@media (max-width: 1250px) {
-  .game-media img {
-    height: 13rem;
-  }
-}
-
-@media (max-width: 1100px) {
-  .game-media img {
-    height: 100%;
-    max-height: 20rem;
-  }
 }
 
 .game-video {

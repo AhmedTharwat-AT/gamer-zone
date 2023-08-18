@@ -51,7 +51,7 @@ export default function Developers({ developers }) {
           className="dev-wrapper"
           style={{ transform: `translateX(${devTransform}px)` }}
         >
-          {developers.map((dev) => {
+          {developers?.map((dev) => {
             return (
               <div
                 key={dev.id}
