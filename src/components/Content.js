@@ -42,11 +42,7 @@ export default function Content({
       ) : (
         <>
           <Filter />
-          <GamesList
-            games={data.results}
-            onClickGame={onClickGame}
-            setImgOverlay={setImgOverlay}
-          />
+          <GamesList games={data.results} onClickGame={onClickGame} />
           <div className="page-btns">
             <button
               className={`btn previous ${data.previous ? "" : "disabled"}`}

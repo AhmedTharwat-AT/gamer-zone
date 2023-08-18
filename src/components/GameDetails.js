@@ -34,7 +34,7 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
       console.log(d);
       setDevelopers(d);
     });
-  }, []);
+  }, [game]);
 
   function displayImages(data) {
     let arr;
@@ -120,7 +120,7 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
             <div className="-rate-high">
               <div className="-high">
                 <div className="-high-title">
-                  {game.ratings.length > 0 ? (
+                  {game.ratings?.length > 0 ? (
                     <>
                       <h1>
                         {

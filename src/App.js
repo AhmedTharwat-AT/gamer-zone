@@ -61,6 +61,7 @@ function App() {
   }, []);
 
   function handleClickGame(gId) {
+    console.log(gId);
     getData(`https://rawg.io/api/games/${gId}?key=${Apikey}`).then((d) =>
       setCurrGame(d)
     );
@@ -83,7 +84,11 @@ function App() {
             <ImagesOverlay setImgOverlay={setImgOverlay} imgs={imgOverlay} />
           ) : null}
           <div className="container">
-            <Header setCurrGame={setCurrGame} />
+            <Header
+              setCurrGame={setCurrGame}
+              onClickGame={handleClickGame}
+              Apikey={Apikey}
+            />
             <div className="main">
               <Sidebar />
               <Content

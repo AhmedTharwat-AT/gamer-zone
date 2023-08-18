@@ -6,6 +6,7 @@ export default function Platforms({ plat, size = "sm" }) {
     let str = "";
     if (nam == "pc") return (str = `fa-brands fa-windows`);
     if (nam == "gog") return (str = `fa-brands fa-windows`);
+    if (nam == "itch.io") return (str = `fa-brands fa-windows`);
     if (nam == "ios") return (str = `fa-icons fa-mobile`);
     if (nam == "app") return (str = `fa-icons fa-mobile`);
     if (nam == "web") return (str = `fa-icons fa-globe`);
@@ -16,10 +17,11 @@ export default function Platforms({ plat, size = "sm" }) {
 
   function verifyPlatType(platform) {
     let str = "";
-    if (platform === checkPlatName(platform)) {
+    const value = checkPlatName(platform);
+    if (platform === value) {
       str = `fa-brands fa-${platform}`;
     } else {
-      str = checkPlatName(platform);
+      str = value;
     }
     return str;
   }
