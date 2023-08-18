@@ -121,7 +121,7 @@ function App() {
           <Footer />
         </div>
       ) : (
-        <h2>LOADING</h2>
+        <div className="spinner"></div>
       )}
     </div>
   );
