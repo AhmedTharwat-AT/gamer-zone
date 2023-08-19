@@ -325,7 +325,7 @@ input:focus {
   background-color: #222;
   position: fixed;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100vh;
   top: 0;
   left: 0;
   z-index: 1001;
@@ -348,8 +348,23 @@ input:focus {
   position: relative;
   padding: 5px;
   width: 100%;
-  min-height: 100vh;
+  overflow-y: scroll;
   transform: translateY(0);
+}
+
+.small .search-results::-webkit-scrollbar {
+  width: 15px;
+}
+
+.small .search-results::-webkit-scrollbar-track {
+  background: #222;
+  border-radius: 7px;
+  padding: 2px;
+}
+.small .search-results::-webkit-scrollbar-thumb {
+  background: var(--light-color);
+  border: 4px solid #222;
+  border-radius: 7px;
 }
 
 .small .close-results {
