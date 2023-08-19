@@ -33,12 +33,8 @@ export default function Platforms({ plat, size = "sm" }) {
       let str = verifyPlatType(platform);
 
       return (
-        <span key={str}>
-          <FontAwesomeIcon
-            key={Math.random() * str.length}
-            icon={str}
-            size={size}
-          />
+        <span key={Math.random() * str.length}>
+          <FontAwesomeIcon icon={str} size={size} />
         </span>
       );
     });
@@ -46,12 +42,8 @@ export default function Platforms({ plat, size = "sm" }) {
     let platform = (plat + "").split(" ")[0].toLowerCase();
     let str = verifyPlatType(platform);
     data = (
-      <span key={str}>
-        <FontAwesomeIcon
-          key={Math.random() * str.length}
-          icon={str}
-          size={size}
-        />
+      <span key={Math.random() * str.length}>
+        <FontAwesomeIcon icon={str} size={size} />
       </span>
     );
   }

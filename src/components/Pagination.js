@@ -45,7 +45,7 @@ export default function Pagination({
         {currPage.current >= 4 ? (
           <>
             <span>1</span>
-            <em> .... </em>
+            <em>....</em>
           </>
         ) : null}
         <span>{currPage.current - 1 <= 0 ? "" : currPage.current - 1} </span>
@@ -57,7 +57,7 @@ export default function Pagination({
           ""
         ) : (
           <>
-            <em> .... </em>
+            <em>....</em>
             <span>{allPages}</span>
           </>
         )}

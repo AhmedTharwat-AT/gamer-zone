@@ -152,6 +152,11 @@ input:focus {
   align-items: center;
   justify-content: center;
 }
+@media (max-width: 600px) {
+  .header {
+    margin-bottom: 0px;
+  }
+}
 
 .header ul {
   width: 100%;
@@ -226,7 +231,7 @@ input:focus {
   width: 100%;
   height: 2.5em;
   border: none;
-  padding: 5px 35px 5px 50px;
+  padding: 5px 27px 5px 50px;
   border-radius: 25px;
   font-size: 1.1em;
   background: url("./images/Search.png") no-repeat scroll 16px, var(--trd-color);
@@ -302,7 +307,7 @@ input:focus {
 .close-results {
   position: absolute;
   top: 3px;
-  right: 7px;
+  right: 9px;
   z-index: 1000;
   font-size: 2rem;
   transition: 0.3s;
@@ -326,6 +331,11 @@ input:focus {
   z-index: 1001;
   padding: 15px;
 }
+@media (max-width: 480px) {
+  .search.small {
+    padding: 15px 0px;
+  }
+}
 
 .search.small input {
   position: fixed;
@@ -346,7 +356,7 @@ input:focus {
   position: fixed;
   z-index: 10000;
   top: 17px;
-  right: 13px;
+  right: 15px;
 }
 
 /* content ------------------------------------------------ */
@@ -361,6 +371,7 @@ input:focus {
 
 .games-list {
   display: grid;
+  justify-content: center;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 15px;
   width: 100%;
@@ -374,14 +385,13 @@ input:focus {
 @media (max-width: 1250px) {
   .games-list {
     grid-template-columns: repeat(2, 350px);
-    justify-content: center;
   }
 }
 
 @media (max-width: 1100px) {
   .games-list {
     grid-template-columns: minmax(300px, 600px);
-    padding: 3px;
+    padding: 5px;
   }
 }
 
@@ -619,7 +629,7 @@ input:focus {
   transition: 0.3s;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .page-btns {
     padding: 5px 0px;
     margin: 30px 0;
@@ -631,6 +641,14 @@ input:focus {
     font-size: 0.85rem;
     letter-spacing: 1px;
     width: 70px;
+  }
+}
+@media (max-width: 431px) {
+  .page-btns .btn {
+    padding: 3px 2px;
+    font-size: 0.9rem;
+    letter-spacing: 0px;
+    width: 60px;
   }
 }
 
@@ -658,7 +676,7 @@ input:focus {
   margin-right: 7px;
   font-size: 1.1rem;
 }
-@media (max-width: 500px) {
+@media (max-width: 600px) {
   .page-num {
     height: 2.5rem;
     padding: 2px;
@@ -668,6 +686,13 @@ input:focus {
     padding: 7px 12px;
     margin-right: 5px;
     font-size: 0.89rem;
+  }
+}
+@media (max-width: 431px) {
+  .page-num span {
+    padding: 4px 6px;
+    margin-right: 4px;
+    font-size: 0.9rem;
   }
 }
 

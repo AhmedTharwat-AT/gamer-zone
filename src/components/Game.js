@@ -20,7 +20,7 @@ export default function Game({ game, onClickGame }) {
       const rand = Math.round(Math.random() * 8);
       setGameVideo(data?.results[rand].data?.["480"]);
     } catch (e) {
-      console.error("dont swap quickly");
+      console.error("dont swap quickly", e.message);
     }
   }
 
@@ -28,7 +28,11 @@ export default function Game({ game, onClickGame }) {
     if (!gameVideo) {
       fetchVideo(video);
     }
-    setTimeout(() => video.paused && video.play(), 0);
+    setTimeout(
+      () =>
+        video.paused && video.play().catch((err) => console.error(err.message)),
+      0
+    );
   }
 
   function handleHoverGame(e) {
