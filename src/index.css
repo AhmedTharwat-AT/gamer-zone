@@ -440,6 +440,7 @@ input:focus {
 
 @media (max-width: 1100px) {
   .game-media {
+    min-height: 150px;
     height: 100%;
     max-height: 20rem;
   }

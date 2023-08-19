@@ -39,13 +39,14 @@ export default function Game({ game, onClickGame }) {
     const gameElement = e.target.closest(".game");
     const height = gameElement.children[0].offsetHeight;
     !hoverElement.hovered && setHoverElement({ height, hovered: true });
-    playVideo(videoEl.current);
+    game.background_image && playVideo(videoEl.current);
   }
 
   function handleUnHoverGame() {
+    setHoverElement({ height: null, hovered: false });
+    if (!game.background_image) return;
     videoEl.current.currentTime !== 0 && videoEl.current.pause();
     videoEl.current.currentTime = 0;
-    setHoverElement({ height: null, hovered: false });
   }
 
   return (
@@ -61,15 +62,19 @@ export default function Game({ game, onClickGame }) {
     >
       <div className="game-wrapper">
         <div className="game-media">
-          {hoverElement.hovered &&
-            (!gameVideo ? <div className="spinner"></div> : null)}
-          <video
-            className={`game-video`}
-            ref={videoEl}
-            src={gameVideo}
-            muted
-            loop
-          ></video>
+          {game.background_image && (
+            <>
+              {hoverElement.hovered &&
+                (!gameVideo ? <div className="spinner"></div> : null)}
+              <video
+                className={`game-video`}
+                ref={videoEl}
+                src={gameVideo}
+                muted
+                loop
+              ></video>
+            </>
+          )}
           <img src={game.background_image} alt={game.name} />
         </div>
         <div className="game-info">

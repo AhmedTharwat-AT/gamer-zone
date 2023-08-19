@@ -55,6 +55,7 @@ export default function Header({
   function handleShowAllResults() {
     setData(allGames);
     setSearchName(searchInput);
+    setCurrGame(null);
   }
 
   function handleLogoClick() {
