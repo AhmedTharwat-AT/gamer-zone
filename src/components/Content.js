@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Filter from "./Filter";
 import GamesList from "./GamesList";
 import GamesDetails from "./GameDetails";
@@ -14,10 +14,10 @@ export default function Content({
   setImgOverlay,
   resetPageToOne,
 }) {
-  let currPage = useRef(1);
+  // for page pagination
+  const currPage = useRef(1);
   if (resetPageToOne) currPage.current = 1;
-  console.log(currPage);
-
+  // for number of games displayed
   let size = 16;
   if (searchName != "") size = 20;
 

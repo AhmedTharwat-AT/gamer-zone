@@ -45,6 +45,8 @@ function App() {
   const [imgOverlay, setImgOverlay] = useState(null);
   const [searchName, setSearchName] = useState("");
   const [resetPageToOne, setResetPageToOne] = useState(false);
+  const [addedGame, setAddedGame] = useState(null);
+  const [showLibrary, setShowLibrary] = useState(false);
 
   async function getData(
     url = `https://rawg.io/api/games?key=${Apikey}&page=1&page_size=16`
@@ -54,29 +56,57 @@ function App() {
     return d;
   }
 
+  //set initial data
+  useEffect(() => {
+    getData().then((d) => setData(d));
+  }, []);
+
+  //add library to local storage
+  //add game to library when added
+  useEffect(() => {
+    if (!addedGame) return;
+    let library = localStorage.getItem("library");
+    if (!library) {
+      localStorage.setItem("library", "[]");
+      library = localStorage.getItem("library");
+    }
+    const data = JSON.parse(library);
+    if (!data.find((el) => el.id === addedGame.id)) {
+      data.push(addedGame);
+      localStorage.setItem("library", JSON.stringify(data));
+    }
+  }, [addedGame]);
+
+  // reset data to default when clicking logo
   function resetData() {
     if (data?.count < 852000 || data.previous)
       getData().then((d) => setData(d));
     searchName && setSearchName("");
     currGame && setCurrGame(null);
     setResetPageToOne(true);
+    setShowLibrary(false);
   }
 
+  //fetch page data
   function handlePagination(url) {
     resetPageToOne && setResetPageToOne(false);
     getData(url).then((d) => setData(d));
     window.scrollTo(0, 0);
   }
 
-  useEffect(() => {
-    getData().then((d) => setData(d));
-  }, []);
+  function handleClickGame(gId, addToLibrary = false) {
+    getData(`https://rawg.io/api/games/${gId}?key=${Apikey}`).then((d) => {
+      if (addToLibrary) {
+        setAddedGame(d);
+      } else {
+        setCurrGame(d);
+        window.scrollTo(0, 0);
+      }
+    });
+  }
 
-  function handleClickGame(gId) {
-    getData(`https://rawg.io/api/games/${gId}?key=${Apikey}`).then((d) =>
-      setCurrGame(d)
-    );
-    window.scrollTo(0, 0);
+  function handleShowLibrary(show) {
+    setShowLibrary(show);
   }
 
   return (
@@ -104,6 +134,7 @@ function App() {
               setSearchName={setSearchName}
               resetData={resetData}
               setResetPageToOne={setResetPageToOne}
+              handleShowLibrary={handleShowLibrary}
             />
             <div className="main">
               <Sidebar />

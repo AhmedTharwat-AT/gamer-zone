@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Game from "./Game";
 
-export default function GamesList({ games, onClickGame }) {
+export default function GamesList({ games, onClickGame, setAddedGames }) {
   return (
     <div className="games-list">
       {games.map((game) => (

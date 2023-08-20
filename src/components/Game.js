@@ -49,15 +49,26 @@ export default function Game({ game, onClickGame }) {
     videoEl.current.currentTime = 0;
   }
 
+  function handleClickGame(e) {
+    const clicked = e.target;
+    if (clicked.closest(".add-fav-btn")) {
+      //add game to library
+      onClickGame(game.id, true);
+    } else {
+      //go to game details page
+      onClickGame(game.id);
+    }
+  }
+
   return (
     <div
       className={`game ${hoverElement.hovered ? "selected" : ""}`}
       style={{ height: hoverElement.height }}
       onMouseEnter={handleHoverGame}
       onMouseLeave={handleUnHoverGame}
-      onClick={() => {
+      onClick={(e) => {
         handleUnHoverGame();
-        setTimeout(() => onClickGame(game.id), 0);
+        handleClickGame(e);
       }}
     >
       <div className="game-wrapper">

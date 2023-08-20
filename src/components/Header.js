@@ -8,6 +8,7 @@ export default function Header({
   setSearchName,
   resetData,
   setResetPageToOne,
+  handleShowLibrary,
 }) {
   const [isDark, setIsDark] = useState(true);
   const [searchInput, setSearchInput] = useState("");
@@ -51,6 +52,7 @@ export default function Header({
     if (!clicked) return;
     onClickGame(clicked.dataset.key);
     closeResults();
+    handleShowLibrary(false);
   }
 
   function handleShowAllResults() {
@@ -58,6 +60,7 @@ export default function Header({
     setSearchName(searchInput);
     setCurrGame(null);
     setResetPageToOne(true);
+    handleShowLibrary(false);
   }
 
   function handleLogoClick() {
@@ -138,7 +141,9 @@ export default function Header({
           ></div>
         </li>
         <li className="header-tabs">
-          <span className="library">Library 💼</span>
+          <span className="library" onClick={() => handleShowLibrary(true)}>
+            Library 💼
+          </span>
           <span className="welcome-user">Welcome , Ahmed</span>
         </li>
       </ul>

@@ -236,13 +236,14 @@ input:focus {
   font-size: 1.1em;
   background: url("./images/Search.png") no-repeat scroll 16px, var(--trd-color);
   background-size: 22px;
-  color: var(--main-color);
-  opacity: 0.5;
+  color: #333;
+  letter-spacing: 1px;
+  opacity: 0.65;
   transition: 0.3s;
 }
 
 .search input::placeholder {
-  color: var(--main-color);
+  color: var(--font-color);
   text-transform: capitalize;
 }
 
@@ -267,6 +268,10 @@ input:focus {
   transform: translateY(calc(100% + 5px));
   border-radius: 5px;
   z-index: 1000;
+}
+
+.search-results span {
+  color: #eee;
 }
 
 .show-all-results,
@@ -367,6 +372,17 @@ input:focus {
   z-index: 10000;
   top: 17px;
   right: 15px;
+}
+
+/* library */
+
+.library {
+  cursor: pointer;
+  transition: 0.3s;
+}
+.library:hover {
+  border-bottom: 1px solid #777;
+  transform: translateY(-1px);
 }
 
 /* content ------------------------------------------------ */
@@ -478,7 +494,7 @@ input:focus {
 .game-video {
   position: absolute;
   width: 101%;
-  height: 100%;
+  height: 101%;
   top: 0;
   left: 0;
   object-fit: fill;
@@ -528,6 +544,7 @@ input:focus {
 .game-info h1 {
   font-size: 1.5rem;
   margin-bottom: 7px;
+  color: #eee;
 }
 
 @media (max-width: 500px) {
@@ -549,11 +566,18 @@ input:focus {
 .game-info .platforms span {
   margin-right: 5px;
 }
+.game-info .platforms span path {
+  color: #eee;
+}
 
 .info-hidden-wrapper {
   display: none;
   opacity: 0;
   transition: 1s;
+  color: #eee;
+}
+.info-hidden-wrapper span {
+  color: #eee;
 }
 
 /* hover a game =------------------------------------------ */
@@ -682,11 +706,15 @@ input:focus {
   border-radius: 7px;
   height: 100%;
 }
+.page-num em {
+  color: #eee;
+}
 .page-num span {
   padding: 10px 15px;
   cursor: pointer;
   margin-right: 7px;
   font-size: 1.1rem;
+  color: #eee;
 }
 @media (max-width: 600px) {
   .page-num {
