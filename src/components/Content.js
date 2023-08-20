@@ -16,6 +16,7 @@ export default function Content({
 }) {
   let currPage = useRef(1);
   if (resetPageToOne) currPage.current = 1;
+  console.log(currPage);
 
   let size = 16;
   if (searchName != "") size = 20;

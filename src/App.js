@@ -103,6 +103,7 @@ function App() {
               onClickGame={handleClickGame}
               setSearchName={setSearchName}
               resetData={resetData}
+              setResetPageToOne={setResetPageToOne}
             />
             <div className="main">
               <Sidebar />

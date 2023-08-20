@@ -669,7 +669,8 @@ input:focus {
 
 .page-btns .btn.disabled {
   cursor: initial;
-  background-color: var(--light-color);
+  background-color: #222;
+  color: #555;
 }
 
 .page-num {

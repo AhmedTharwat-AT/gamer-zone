@@ -10,21 +10,22 @@ export default function Pagination({
 }) {
   const allPages = Math.ceil(data.count / size);
 
-  // let currPage = useRef(currPageNumber);
-  // if (resetPageToOne) currPage.current = 1;
-
   function handleNextPage() {
-    data.next && handlePagination(data.next);
-    data.next && currPage.current++;
+    if (!data.next) return;
+    handlePagination(data.next);
+    currPage.current++;
   }
 
   function handlePreviousPage() {
-    data.previous && handlePagination(data.previous);
-    data.previous && currPage.current--;
+    if (!data.previous) return;
+    handlePagination(data.previous);
+    currPage.current--;
   }
 
   function handleCurrPage(e) {
     if (e.target.localName !== "span") return;
+    if (!e.target.innerText) return;
+    if (Number(e.target.innerText) === currPage.current) return;
     currPage.current = Number(e.target.innerText);
     handlePagination(
       `https://rawg.io/api/games?key=${Apikey}${
@@ -51,7 +52,7 @@ export default function Pagination({
         <span>{currPage.current - 1 <= 0 ? "" : currPage.current - 1} </span>
         <span className="curr-page">{currPage.current} </span>
         <span>
-          {currPage.current + 1 > allPages ? "" : currPage.current + 1}
+          {currPage.current + 1 > allPages ? null : currPage.current + 1}
         </span>
         {currPage.current + 1 >= allPages ? (
           ""

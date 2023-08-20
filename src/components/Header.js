@@ -7,6 +7,7 @@ export default function Header({
   setData,
   setSearchName,
   resetData,
+  setResetPageToOne,
 }) {
   const [isDark, setIsDark] = useState(true);
   const [searchInput, setSearchInput] = useState("");
@@ -56,6 +57,7 @@ export default function Header({
     setData(allGames);
     setSearchName(searchInput);
     setCurrGame(null);
+    setResetPageToOne(true);
   }
 
   function handleLogoClick() {
@@ -113,7 +115,7 @@ export default function Header({
                       );
                     })
                     .slice(0, 10)}
-                  {allGames.results.length > 10 ? (
+                  {allGames.results.length >= 2 ? (
                     <>
                       <hr></hr>
                       <span
