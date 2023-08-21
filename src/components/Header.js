@@ -68,6 +68,10 @@ export default function Header({
     resetData();
   }
 
+  function handleClickLibrary() {
+    handleShowLibrary(true);
+    setCurrGame(null);
+  }
   return (
     <div className="header">
       <ul>
@@ -80,18 +84,20 @@ export default function Header({
               screenWidth < 900 && searchInput != "" && "small"
             }`}
           >
-            <input
-              type="text"
-              placeholder="enter game name"
-              value={searchInput}
-              onClick={() => setScreenWidth(window.innerWidth)}
-              onChange={(e) => setSearchInput(e.target.value)}
-            ></input>
-            {allGames && (
-              <span onClick={() => closeResults()} className="close-results">
-                &times;
-              </span>
-            )}
+            <div className="input-close-wrapper">
+              <input
+                type="text"
+                placeholder="enter game name"
+                value={searchInput}
+                onClick={() => setScreenWidth(window.innerWidth)}
+                onChange={(e) => setSearchInput(e.target.value)}
+              ></input>
+              {allGames && (
+                <span onClick={() => closeResults()} className="close-results">
+                  &times;
+                </span>
+              )}
+            </div>
             <div
               className="search-results"
               style={searchInput ? { padding: "7px" } : {}}
@@ -141,7 +147,7 @@ export default function Header({
           ></div>
         </li>
         <li className="header-tabs">
-          <span className="library" onClick={() => handleShowLibrary(true)}>
+          <span className="library" onClick={handleClickLibrary}>
             Library 💼
           </span>
           <span className="welcome-user">Welcome , Ahmed</span>

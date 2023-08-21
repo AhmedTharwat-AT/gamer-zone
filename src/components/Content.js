@@ -5,14 +5,15 @@ import GamesDetails from "./GameDetails";
 import Pagination from "./Pagination";
 
 export default function Content({
+  Apikey,
   data,
   onClickGame,
   currGame,
   searchName,
   handlePagination,
-  Apikey,
   setImgOverlay,
   resetPageToOne,
+  showLibrary,
 }) {
   // for page pagination
   const currPage = useRef(1);

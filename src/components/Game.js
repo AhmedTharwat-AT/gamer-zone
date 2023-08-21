@@ -3,13 +3,18 @@ import { func } from "prop-types";
 import { useEffect, useRef, useState } from "react";
 import Platforms from "./Platforms";
 
-export default function Game({ game, onClickGame }) {
+export default function Game({ game, onClickGame, libraryGames = null }) {
   const [hoverElement, setHoverElement] = useState({
     height: null,
     hovered: false,
   });
   const [gameVideo, setGameVideo] = useState(null);
   const videoEl = useRef();
+
+  // check if game is in library
+  let isAddedToLibrary = JSON.parse(localStorage.getItem("library"))?.find(
+    (el) => el.id == game.id
+  );
 
   async function fetchVideo(video) {
     try {
@@ -28,11 +33,7 @@ export default function Game({ game, onClickGame }) {
     if (!gameVideo) {
       fetchVideo(video);
     }
-    setTimeout(
-      () =>
-        video.paused && video.play().catch((err) => console.error(err.message)),
-      0
-    );
+    video.paused && video.play().catch((err) => console.error(err.message));
   }
 
   function handleHoverGame(e) {
@@ -98,7 +99,9 @@ export default function Game({ game, onClickGame }) {
             </span>
           </div>
           <h1> {game.name}</h1>
-          <button className="add-fav-btn">+ {game.added}</button>
+          <button className={`add-fav-btn ${isAddedToLibrary ? "added" : ""}`}>
+            {isAddedToLibrary ? game.added : "+" + game.added}
+          </button>
           <div className="info-hidden-wrapper">
             <div className="game-info-hidden">
               <div>

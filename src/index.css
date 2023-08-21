@@ -16,6 +16,7 @@
   scroll-behavior: smooth;
   font-family: "Roboto", sans-serif, arial;
   color: var(--font-color);
+  /* border: 1px solid red; */
 }
 body {
   background-color: var(--main-color);
@@ -43,6 +44,11 @@ font {
 @media (max-width: 576px) {
   .container {
     padding: 0 5px;
+  }
+}
+@media (max-width: 376px) {
+  .container {
+    padding: 0;
   }
 }
 
@@ -226,6 +232,12 @@ input:focus {
   width: 100%;
 }
 
+.input-close-wrapper {
+  text-align: center;
+  width: 100%;
+  position: relative;
+}
+
 .search input {
   appearance: none;
   width: 100%;
@@ -311,7 +323,8 @@ input:focus {
 
 .close-results {
   position: absolute;
-  top: 3px;
+  top: 50%;
+  transform: translateY(-50%);
   right: 9px;
   z-index: 1000;
   font-size: 2rem;
@@ -368,9 +381,6 @@ input:focus {
 }
 
 .small .close-results {
-  position: fixed;
-  z-index: 10000;
-  top: 17px;
   right: 15px;
 }
 
@@ -423,6 +433,7 @@ input:focus {
 
 .game {
   position: relative;
+  max-width: 600px;
 }
 
 .game-wrapper {
@@ -641,6 +652,26 @@ input:focus {
   color: var(--font-color);
 }
 
+.add-fav-btn.added {
+  position: relative;
+  background-color: green;
+  padding-left: 15px;
+  color: #fff;
+}
+
+.add-fav-btn.added:hover {
+  background-color: rgb(1, 93, 1);
+}
+
+.add-fav-btn.added::before {
+  position: absolute;
+  content: "\2713";
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9rem;
+}
+
 .page-btns {
   width: 100%;
   display: flex;
@@ -786,7 +817,7 @@ input:focus {
 @media (max-width: 900px) {
   .details-main {
     align-items: center;
-    grid-template-columns: minmax(300px, 600px);
+    grid-template-columns: minmax(200px, 600px);
   }
 }
 
@@ -1091,6 +1122,15 @@ input:focus {
   width: 50%;
   margin-bottom: 20px;
   padding-right: 10px;
+  overflow: hidden;
+}
+
+.about-section div {
+  display: flex;
+  flex-wrap: wrap;
+}
+.about-section div span {
+  text-overflow: ellipsis;
 }
 
 .about-section-full {
@@ -1231,7 +1271,7 @@ input:focus {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 100%;
   max-height: 100vh;
   background-color: black;
@@ -1468,6 +1508,7 @@ input:focus {
 /* developers */
 
 .developers-container {
+  width: 100%;
   margin-top: 40px;
   margin-right: 0;
   overflow: hidden;
