@@ -10,6 +10,10 @@ export default function Library({ onClickGame, libraryGames }) {
         </div>
       ) : (
         <div className="library-empty">
+          Image by{" "}
+          <a href="https://www.freepik.com/free-vector/cardboard-boxes-collection-shipment_2005023.htm#page=4&query=empty%20box&position=33&from_view=search&track=ais">
+            Freepik
+          </a>
           <h1>Library is Empty</h1>
           <img src="/images/box.png"></img>
           <p>Add game to you library</p>
