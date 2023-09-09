@@ -115,6 +115,12 @@ function App() {
     setShowLibrary(show);
   }
 
+  function handleFilter(url) {
+    console.log(url);
+    getData(url).then((d) => setData(d));
+    setResetPageToOne(true);
+  }
+
   return (
     <div className="App">
       {data ? (
@@ -160,6 +166,7 @@ function App() {
                   onClickGame={handleClickGame}
                   resetPageToOne={resetPageToOne}
                   showLibrary={showLibrary}
+                  handleFilter={handleFilter}
                 />
               )}
             </div>

@@ -14,6 +14,7 @@ export default function Content({
   setImgOverlay,
   resetPageToOne,
   showLibrary,
+  handleFilter,
 }) {
   // for page pagination
   const currPage = useRef(1);
@@ -32,15 +33,15 @@ export default function Content({
         />
       ) : (
         <>
-          {/* <Filter /> */}
-          <Pagination
+          <Filter Apikey={Apikey} handleFilter={handleFilter} />
+          {/* <Pagination
             data={data}
             handlePagination={handlePagination}
             Apikey={Apikey}
             searchName={searchName}
             size={size}
             currPage={currPage}
-          />
+          /> */}
           <GamesList games={data.results} onClickGame={onClickGame} />
           <Pagination
             data={data}
