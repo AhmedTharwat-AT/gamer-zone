@@ -116,7 +116,6 @@ function App() {
   }
 
   function handleFilter(url) {
-    console.log(url);
     getData(url).then((d) => setData(d));
     setResetPageToOne(true);
   }

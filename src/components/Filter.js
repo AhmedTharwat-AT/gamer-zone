@@ -42,14 +42,21 @@ export default function Filter({ handleFilter, Apikey }) {
   return (
     <div className="filter">
       <div
-        onFocus={() => setShowPlatforms(true)}
-        onBlur={() => setShowPlatforms(false)}
-        tabIndex="0"
+        onClick={(e) => {
+          showGenres && setShowGenres(false);
+          !e.target.closest(".close-filter") && setShowPlatforms(true);
+        }}
         className={showPlatforms ? "showPlat" : ""}
       >
         <h2>Platforms</h2>
         <span>&#x203A;</span>
         <div className="filter-platforms" onClick={handlePlat}>
+          <span
+            className="close-filter"
+            onClick={() => setShowPlatforms(false)}
+          >
+            &#x2715;
+          </span>
           {platforms?.results.map((el) => (
             <span key={el.id} idd={el.id}>
               {el.name}
@@ -58,14 +65,18 @@ export default function Filter({ handleFilter, Apikey }) {
         </div>
       </div>
       <div
-        onFocus={() => setShowGenres(true)}
-        onBlur={() => setShowGenres(false)}
-        tabIndex="0"
+        onClick={(e) => {
+          showPlatforms && setShowPlatforms(false);
+          !e.target.closest(".close-filter") && setShowGenres(true);
+        }}
         className={showGenres ? "showGenres" : ""}
       >
         <h2>Genres</h2>
         <span>&#x203A;</span>
         <div className="filter-genres" onClick={handleGenre}>
+          <span className="close-filter" onClick={() => setShowGenres(false)}>
+            &#x2715;
+          </span>
           {genres?.results.map((el) => (
             <span key={el.id} idd={el.id}>
               {el.name}
