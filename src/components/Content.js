@@ -30,6 +30,7 @@ export default function Content({
           setImgOverlay={setImgOverlay}
           game={currGame}
           Apikey={Apikey}
+          onClickGame={onClickGame}
         />
       ) : (
         <>

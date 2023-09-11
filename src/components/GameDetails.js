@@ -5,7 +5,12 @@ import Section from "./Section";
 import Stores from "./Stores";
 import Developers from "./Developers";
 
-export default function GamesDetails({ game, Apikey, setImgOverlay }) {
+export default function GamesDetails({
+  game,
+  Apikey,
+  setImgOverlay,
+  onClickGame,
+}) {
   const [hovered, setHovered] = useState(null);
   const [showMore, setShowMore] = useState(false);
   const [screenshots, setScreenshots] = useState(null);
@@ -16,6 +21,10 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
     meh: "😑",
     skip: "👎",
   };
+
+  let isAddedToLibrary = JSON.parse(localStorage.getItem("library"))?.find(
+    (el) => el.id == game.id
+  );
 
   async function getData(url) {
     const res = await fetch(url);
@@ -92,23 +101,28 @@ export default function GamesDetails({ game, Apikey, setImgOverlay }) {
           </div>
           <div className="-left-content">
             <h1>{game.name}</h1>
-            <div className="-content-btns">
-              <button>
-                <span>Add to</span> Library
-                <span className="-btns-icon">
-                  <FontAwesomeIcon
-                    key="Library"
-                    icon="fa-solid fa-circle-plus"
-                  />
-                </span>
+            <div className={`-content-btns ${isAddedToLibrary && "added"}`}>
+              <button onClick={() => onClickGame(game.id, true)}>
+                {isAddedToLibrary ? (
+                  <>
+                    <span>Added to</span> Library
+                    <span className="-btns-icon">
+                      <FontAwesomeIcon icon="fa-solid fa-circle-check" />
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <span>Add to</span> Library
+                    <span className="-btns-icon">
+                      <FontAwesomeIcon icon="fa-solid fa-circle-plus" />
+                    </span>
+                  </>
+                )}
               </button>
               <button>
                 <span>Add to</span> Wishlist
                 <span className="-btns-icon">
-                  <FontAwesomeIcon
-                    key="Wishlist"
-                    icon="fa-solid fa-briefcase"
-                  />
+                  <FontAwesomeIcon icon="fa-solid fa-briefcase" />
                 </span>
               </button>
             </div>

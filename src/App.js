@@ -17,6 +17,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faN,
+  faCircleCheck,
   faMobile,
   faGlobe,
   faBriefcase,
@@ -36,6 +37,7 @@ library.add(
   faGlobe,
   faBriefcase,
   faPlusCircle,
+  faCircleCheck,
   faGamepad
 );
 
@@ -70,10 +72,10 @@ function App() {
         setLibraryGames(JSON.parse(localStorage.getItem("library")))
       : localStorage.setItem("library", "[]");
   }
+  useEffect(() => initialLibraryGames(), []);
 
   //add or remove game from library
   useEffect(() => {
-    initialLibraryGames();
     if (!addedGame) return;
     const data = JSON.parse(localStorage.getItem("library"));
     const gameIndex = data.findIndex((el) => el.id === addedGame.id);
@@ -102,6 +104,7 @@ function App() {
   function handleClickGame(gId, addToLibrary = false) {
     getData(`https://rawg.io/api/games/${gId}?key=${Apikey}`).then((d) => {
       if (addToLibrary) {
+        console.log(gId);
         setAddedGame(d);
       } else {
         setShowLibrary(false);
