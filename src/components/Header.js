@@ -9,6 +9,9 @@ export default function Header({
   resetData,
   setResetPageToOne,
   handleShowLibrary,
+  showLibrary,
+  handleShowSignUp,
+  showSignUp,
 }) {
   const [isDark, setIsDark] = useState(true);
   const [searchInput, setSearchInput] = useState("");
@@ -58,7 +61,6 @@ export default function Header({
   function handleShowAllResults() {
     setData(allGames);
     setSearchName(searchInput);
-    setCurrGame(null);
     setResetPageToOne(true);
     handleShowLibrary(false);
   }
@@ -68,10 +70,6 @@ export default function Header({
     resetData();
   }
 
-  function handleClickLibrary() {
-    handleShowLibrary(true);
-    setCurrGame(null);
-  }
   return (
     <div className="header">
       <ul>
@@ -147,10 +145,19 @@ export default function Header({
           ></div>
         </li>
         <li className="header-tabs">
-          <span className="library" onClick={handleClickLibrary}>
+          <span
+            className={`nav-btn ${showLibrary && "selected"}`}
+            onClick={() => handleShowLibrary(true)}
+          >
             Library 💼
           </span>
-          <span className="welcome-user">Welcome , Ahmed</span>
+          {/* <span className="welcome-user">Welcome , Ahmed</span> */}
+          <span
+            className={`nav-btn ${showSignUp && "selected"}`}
+            onClick={handleShowSignUp}
+          >
+            Sign-up
+          </span>
         </li>
       </ul>
     </div>

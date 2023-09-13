@@ -128,8 +128,12 @@ input:focus {
 /* page content */
 
 .main-wrapper {
-  min-height: 100%;
+  height: 100%;
+  min-height: 100vh;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .main {
@@ -180,10 +184,10 @@ input:focus {
 .header-tabs {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 5px;
+  gap: 15px;
   width: 100%;
   padding: 15px;
+  justify-content: center;
 }
 
 @media (max-width: 600px) {
@@ -385,11 +389,12 @@ input:focus {
 
 /* library */
 
-.library {
+.nav-btn {
   cursor: pointer;
   transition: 0.3s;
 }
-.library:hover {
+.nav-btn.selected,
+.nav-btn:hover {
   border-bottom: 1px solid #777;
   transform: translateY(-1px);
 }
@@ -808,6 +813,7 @@ input:focus {
 
 .details {
   height: 100%;
+  padding: 0 5px;
 }
 
 .details-main {
@@ -1293,7 +1299,6 @@ input:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  max-height: 100vh;
   background-color: black;
   z-index: 1000;
   display: flex;
@@ -1745,7 +1750,7 @@ input:focus {
   height: 2px;
   max-width: 350px;
   width: 100%;
-  background-color: #fff;
+  background-color: var(--font-color);
   top: 50%;
   z-index: -1;
 }
@@ -1764,18 +1769,25 @@ input:focus {
 
 .library-games {
   width: 100%;
+  overflow-x: scroll;
+}
+
+.library-games::-webkit-scrollbar {
+  /* height: 10px; */
+}
+.library-games::-webkit-scrollbar-button {
+  /* height: 10px; */
 }
 
 .library-games .games-list {
   display: flex;
-  flex-wrap: wrap;
-  min-height: fit-content;
+  min-height: 600px;
   justify-content: start;
+  padding: 20px 10px;
 }
 .library-games .games-list .game {
-  max-width: 270px;
+  min-width: 270px;
 }
-
 /* empty library */
 .library-empty {
   min-height: 60vh;
@@ -1844,7 +1856,7 @@ input:focus {
     gap: 15px;
   }
 }
-.filter > div:hover h2 {
+.filter > div:hover > h2 {
   color: var(--darker-font);
 }
 .filter > div > span {
@@ -1858,6 +1870,8 @@ input:focus {
   position: absolute;
   top: 0;
   left: 0;
+  transform: scaleY(0);
+  transform-origin: top;
   width: 110%;
   background-color: #ddd;
   display: flex;
@@ -1872,6 +1886,7 @@ input:focus {
 .filter > div.showGenres .filter-genres,
 .filter > div.showPlat .filter-platforms {
   visibility: visible;
+  transform: scaleY(1);
   opacity: 1;
 }
 
@@ -1885,7 +1900,21 @@ input:focus {
   border-bottom: 1px solid gray;
 }
 
+.filter-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #aaa;
+  padding-bottom: 5px;
+}
+
+.filter-top h2 {
+  color: #777;
+  font-size: 1.28rem;
+}
+
 .close-filter {
+  color: #333;
   align-self: end;
   width: fit-content;
   font-size: 1.4rem;
@@ -1921,6 +1950,118 @@ input:focus {
 
 .side-list::-webkit-scrollbar {
   display: none;
+}
+
+/* sign up---------------------------------------------------- */
+
+.sign-up {
+  padding: 5px;
+}
+
+.sign-wrapper {
+  min-height: 60vh;
+  background-color: var(--sec-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  padding: 80px 30px;
+  margin: auto;
+  width: fit-content;
+}
+
+.sign-form {
+  display: flex;
+  gap: 25px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  max-width: 500px;
+}
+
+.sign-form h1 {
+  align-self: start;
+  margin-top: -50px;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  width: 100%;
+  background: linear-gradient(
+    130deg,
+    var(--light-color) 70%,
+    var(--sec-color) 70%
+  );
+  padding-left: 10px;
+}
+
+@media (max-width: 500px) {
+  .sign-wrapper {
+    width: auto;
+    padding: 80px 15px;
+  }
+
+  .sign-form {
+    width: 100%;
+  }
+}
+
+.sign-form > div {
+  font-weight: bold;
+  width: 100%;
+}
+
+.sign-form > div > label {
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+.sign-form > div > span {
+  color: var(--trd-color);
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.sign-form > div > span:hover {
+  color: var(--light-color);
+}
+
+.sign-input {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.sign-input input {
+  width: 100%;
+  padding: 9px 5px;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  color: #222;
+  border: 1px solid var(--sec-color);
+}
+.sign-input label {
+  color: #fff;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+.sign-btn {
+  width: 100%;
+  padding: 12px 5px;
+  font-size: 1.1rem;
+  appearance: none;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  background-color: var(--light-color);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.sign-btn:hover {
+  background-color: var(--trd-color);
 }
 
 /* footer-------------------------------------- */

@@ -24,6 +24,7 @@ import {
   faPlusCircle,
   faGamepad,
 } from "@fortawesome/free-solid-svg-icons";
+import SignUp from "./components/SignUp";
 library.add(
   fab,
   faPlaystation,
@@ -51,6 +52,7 @@ function App() {
   const [addedGame, setAddedGame] = useState(null);
   const [showLibrary, setShowLibrary] = useState(false);
   const [libraryGames, setLibraryGames] = useState(null);
+  const [showSignUp, setShowSignUp] = useState(false);
 
   async function getData(
     url = `https://rawg.io/api/games?key=${Apikey}&page=1&page_size=16`
@@ -92,6 +94,7 @@ function App() {
     currGame && setCurrGame(null);
     setResetPageToOne(true);
     setShowLibrary(false);
+    setShowSignUp(false);
   }
 
   //fetch page data
@@ -116,6 +119,13 @@ function App() {
 
   function handleShowLibrary(show) {
     setShowLibrary(show);
+    currGame && setCurrGame(null);
+    showSignUp && setShowSignUp(false);
+  }
+
+  function handleShowSignUp() {
+    setShowSignUp(true);
+    showLibrary && setShowLibrary(false);
   }
 
   function handleFilter(url) {
@@ -149,29 +159,36 @@ function App() {
               resetData={resetData}
               setResetPageToOne={setResetPageToOne}
               handleShowLibrary={handleShowLibrary}
+              showLibrary={showLibrary}
+              handleShowSignUp={handleShowSignUp}
+              showSignUp={showSignUp}
             />
-            <div className="main">
-              <Sidebar />
-              {showLibrary ? (
-                <Library
-                  onClickGame={handleClickGame}
-                  libraryGames={libraryGames}
-                />
-              ) : (
-                <Content
-                  Apikey={Apikey}
-                  data={data}
-                  handlePagination={handlePagination}
-                  currGame={currGame}
-                  searchName={searchName}
-                  setImgOverlay={setImgOverlay}
-                  onClickGame={handleClickGame}
-                  resetPageToOne={resetPageToOne}
-                  showLibrary={showLibrary}
-                  handleFilter={handleFilter}
-                />
-              )}
-            </div>
+            {showSignUp ? (
+              <SignUp />
+            ) : (
+              <div className="main">
+                <Sidebar />
+                {showLibrary ? (
+                  <Library
+                    onClickGame={handleClickGame}
+                    libraryGames={libraryGames}
+                  />
+                ) : (
+                  <Content
+                    Apikey={Apikey}
+                    data={data}
+                    handlePagination={handlePagination}
+                    currGame={currGame}
+                    searchName={searchName}
+                    setImgOverlay={setImgOverlay}
+                    onClickGame={handleClickGame}
+                    resetPageToOne={resetPageToOne}
+                    showLibrary={showLibrary}
+                    handleFilter={handleFilter}
+                  />
+                )}
+              </div>
+            )}
           </div>
           <Footer />
         </div>
