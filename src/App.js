@@ -23,8 +23,10 @@ import {
   faBriefcase,
   faPlusCircle,
   faGamepad,
+  faPowerOff,
 } from "@fortawesome/free-solid-svg-icons";
 import SignUp from "./components/SignUp";
+import Login from "./components/Login";
 library.add(
   fab,
   faPlaystation,
@@ -39,7 +41,8 @@ library.add(
   faBriefcase,
   faPlusCircle,
   faCircleCheck,
-  faGamepad
+  faGamepad,
+  faPowerOff
 );
 
 function App() {
@@ -53,6 +56,8 @@ function App() {
   const [showLibrary, setShowLibrary] = useState(false);
   const [libraryGames, setLibraryGames] = useState(null);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [logged, setLogged] = useState(null);
 
   async function getData(
     url = `https://rawg.io/api/games?key=${Apikey}&page=1&page_size=16`
@@ -62,11 +67,6 @@ function App() {
     return d;
   }
 
-  //set initial data
-  useEffect(() => {
-    getData().then((d) => setData(d));
-  }, []);
-
   //add library to local storage
   function initialLibraryGames() {
     localStorage.getItem("library")
@@ -74,7 +74,13 @@ function App() {
         setLibraryGames(JSON.parse(localStorage.getItem("library")))
       : localStorage.setItem("library", "[]");
   }
-  useEffect(() => initialLibraryGames(), []);
+
+  //set initial data
+  useEffect(() => {
+    getData().then((d) => setData(d));
+    initialLibraryGames();
+    setLogged(JSON.parse(localStorage.getItem("logged")));
+  }, []);
 
   //add or remove game from library
   useEffect(() => {
@@ -95,6 +101,7 @@ function App() {
     setResetPageToOne(true);
     setShowLibrary(false);
     setShowSignUp(false);
+    setShowLogin(false);
   }
 
   //fetch page data
@@ -126,11 +133,27 @@ function App() {
   function handleShowSignUp() {
     setShowSignUp(true);
     showLibrary && setShowLibrary(false);
+    currGame && setCurrGame(null);
+    showLogin && setShowLogin(false);
   }
 
   function handleFilter(url) {
     getData(url).then((d) => setData(d));
     setResetPageToOne(true);
+  }
+
+  function handleLogin(loginUser) {
+    localStorage.setItem("logged", JSON.stringify(loginUser));
+    setLogged(loginUser);
+    setShowLogin(false);
+    setShowSignUp(false);
+  }
+
+  function handleSignOut() {
+    localStorage.setItem("logged", null);
+    setLogged(null);
+    currGame && setCurrGame(null);
+    showLibrary && setShowLibrary(false);
   }
 
   return (
@@ -162,9 +185,13 @@ function App() {
               showLibrary={showLibrary}
               handleShowSignUp={handleShowSignUp}
               showSignUp={showSignUp}
+              logged={logged}
+              handleSignOut={handleSignOut}
             />
-            {showSignUp ? (
-              <SignUp />
+            {showLogin ? (
+              <Login handleLogin={handleLogin} />
+            ) : showSignUp ? (
+              <SignUp setShowLogin={setShowLogin} />
             ) : (
               <div className="main">
                 <Sidebar />

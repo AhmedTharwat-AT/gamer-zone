@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Platforms from "./Platforms";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function Header({
   setCurrGame,
   Apikey,
@@ -12,6 +13,8 @@ export default function Header({
   showLibrary,
   handleShowSignUp,
   showSignUp,
+  logged,
+  handleSignOut,
 }) {
   const [isDark, setIsDark] = useState(true);
   const [searchInput, setSearchInput] = useState("");
@@ -145,19 +148,27 @@ export default function Header({
           ></div>
         </li>
         <li className="header-tabs">
-          <span
-            className={`nav-btn ${showLibrary && "selected"}`}
-            onClick={() => handleShowLibrary(true)}
-          >
-            Library 💼
-          </span>
-          {/* <span className="welcome-user">Welcome , Ahmed</span> */}
-          <span
-            className={`nav-btn ${showSignUp && "selected"}`}
-            onClick={handleShowSignUp}
-          >
-            Sign-up
-          </span>
+          {logged?.name ? (
+            <>
+              <span className="welcome-user">Welcome , {logged.name}</span>
+              <span
+                className={`nav-btn ${showLibrary && "selected"}`}
+                onClick={() => handleShowLibrary(true)}
+              >
+                Library 💼
+              </span>
+              <div className="sign-out" onClick={handleSignOut}>
+                <FontAwesomeIcon icon="fa-solid fa-power-off fa-3x" />
+              </div>
+            </>
+          ) : (
+            <span
+              className={`nav-btn ${showSignUp && "selected"}`}
+              onClick={handleShowSignUp}
+            >
+              Sign-up 📝
+            </span>
+          )}
         </li>
       </ul>
     </div>
