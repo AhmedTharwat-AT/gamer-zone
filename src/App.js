@@ -67,29 +67,33 @@ function App() {
     return d;
   }
 
-  //add library to local storage
+  //set library games if exist
   function initialLibraryGames() {
-    localStorage.getItem("library")
-      ? libraryGames ||
-        setLibraryGames(JSON.parse(localStorage.getItem("library")))
-      : localStorage.setItem("library", "[]");
+    const lib = JSON.parse(localStorage.getItem("logged")).library;
+    lib && setLibraryGames(lib);
   }
 
   //set initial data
   useEffect(() => {
     getData().then((d) => setData(d));
-    initialLibraryGames();
     setLogged(JSON.parse(localStorage.getItem("logged")));
   }, []);
 
   //add or remove game from library
   useEffect(() => {
-    if (!addedGame) return;
-    const data = JSON.parse(localStorage.getItem("library"));
+    if (!logged || !addedGame) return;
+    const data = JSON.parse(localStorage.getItem("logged")).library;
+    console.log(data);
     const gameIndex = data.findIndex((el) => el.id === addedGame.id);
     gameIndex === -1 ? data.push(addedGame) : data.splice(gameIndex, 1);
-    localStorage.setItem("library", JSON.stringify(data));
-    setLibraryGames(JSON.parse(localStorage.getItem("library")));
+    const newLogged = { ...logged, library: data };
+    localStorage.setItem("logged", JSON.stringify(newLogged));
+    const users = JSON.parse(localStorage.getItem("users"));
+    const newUsers = users.map((el) =>
+      el.name === newLogged.name ? newLogged : el
+    );
+    localStorage.setItem("users", JSON.stringify(newUsers));
+    setLibraryGames(data);
   }, [addedGame]);
 
   // reset data to default when clicking logo
@@ -114,11 +118,10 @@ function App() {
   function handleClickGame(gId, addToLibrary = false) {
     getData(`https://rawg.io/api/games/${gId}?key=${Apikey}`).then((d) => {
       if (addToLibrary) {
-        console.log(gId);
         setAddedGame(d);
       } else {
-        setShowLibrary(false);
         setCurrGame(d);
+        setShowLibrary(false);
         window.scrollTo(0, 0);
       }
     });
@@ -147,6 +150,7 @@ function App() {
     setLogged(loginUser);
     setShowLogin(false);
     setShowSignUp(false);
+    initialLibraryGames();
   }
 
   function handleSignOut() {
@@ -154,6 +158,7 @@ function App() {
     setLogged(null);
     currGame && setCurrGame(null);
     showLibrary && setShowLibrary(false);
+    libraryGames && setLibraryGames(null);
   }
 
   return (

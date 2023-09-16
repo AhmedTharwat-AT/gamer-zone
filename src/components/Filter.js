@@ -49,7 +49,7 @@ export default function Filter({ handleFilter, Apikey }) {
         className={showPlatforms ? "showPlat" : ""}
       >
         <h2>Platforms</h2>
-        <span>&#x203A;</span>
+        <h3>&#x203A;</h3>
         <div className="filter-platforms" onClick={handlePlat}>
           <div className="filter-top">
             <h2>Platforms</h2>
@@ -75,7 +75,7 @@ export default function Filter({ handleFilter, Apikey }) {
         className={showGenres ? "showGenres" : ""}
       >
         <h2>Genres</h2>
-        <span>&#x203A;</span>
+        <h3>&#x203A;</h3>
         <div className="filter-genres" onClick={handleGenre}>
           <div className="filter-top">
             <h2>Genres</h2>

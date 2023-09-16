@@ -1,6 +1,10 @@
 import { useState } from "react";
 export default function SignUp({ setShowLogin }) {
-  const [signedUser, setSignedUser] = useState({ name: "", pass: "" });
+  const [signedUser, setSignedUser] = useState({
+    name: "",
+    pass: "",
+    library: [],
+  });
 
   function checkUserAlreadyExist() {
     const users = JSON.parse(localStorage.getItem("users"));

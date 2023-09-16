@@ -12,9 +12,9 @@ export default function Game({ game, onClickGame, libraryGames = null }) {
   const videoEl = useRef();
 
   // check if game is in library
-  let isAddedToLibrary = JSON.parse(localStorage.getItem("library"))?.find(
-    (el) => el.id == game.id
-  );
+  let isAddedToLibrary = JSON.parse(
+    localStorage.getItem("logged")
+  )?.library?.find((el) => el.id == game.id);
 
   async function fetchVideo(video) {
     try {

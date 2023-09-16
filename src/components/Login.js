@@ -15,7 +15,11 @@ export default function Login({ handleLogin }) {
     e.preventDefault();
     if (!loginUser.name && !loginUser.pass) return;
     if (checkUserExist()) {
-      handleLogin(loginUser);
+      handleLogin(
+        JSON.parse(localStorage.getItem("users")).find(
+          (el) => el.name === loginUser.name
+        )
+      );
     }
   }
 

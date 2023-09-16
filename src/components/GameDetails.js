@@ -22,9 +22,9 @@ export default function GamesDetails({
     skip: "👎",
   };
 
-  let isAddedToLibrary = JSON.parse(localStorage.getItem("library"))?.find(
-    (el) => el.id == game.id
-  );
+  let isAddedToLibrary = JSON.parse(
+    localStorage.getItem("logged")
+  )?.library?.find((el) => el.id == game.id);
 
   async function getData(url) {
     const res = await fetch(url);
