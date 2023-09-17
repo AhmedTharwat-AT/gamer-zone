@@ -1,6 +1,16 @@
 import { useState } from "react";
+import Swal from "sweetalert2";
 export default function Login({ handleLogin }) {
   const [loginUser, setLoginUser] = useState({ name: "", pass: "" });
+  const [notValid, setNotValid] = useState(false);
+
+  const popup = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+  });
 
   function checkUserExist() {
     const users = JSON.parse(localStorage.getItem("users"));
@@ -13,13 +23,24 @@ export default function Login({ handleLogin }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!loginUser.name && !loginUser.pass) return;
+    if (!loginUser.name || !loginUser.pass) {
+      setNotValid(true);
+      return;
+    }
     if (checkUserExist()) {
       handleLogin(
         JSON.parse(localStorage.getItem("users")).find(
           (el) => el.name === loginUser.name
         )
       );
+      setNotValid(false);
+    } else {
+      // account not found , wrong name or pass
+      popup.fire({
+        icon: "error",
+        title: "Account not found!",
+        customClass: { timerProgressBar: "timer-bar-false" },
+      });
     }
   }
 
@@ -37,6 +58,7 @@ export default function Login({ handleLogin }) {
               }
               value={loginUser.name}
             ></input>
+            {notValid && !loginUser.name && <p>Please enter valid username!</p>}
           </div>
           <div className="sign-input">
             <label>Password</label>
@@ -47,6 +69,7 @@ export default function Login({ handleLogin }) {
               }
               value={loginUser.pass}
             ></input>
+            {notValid && !loginUser.pass && <p>Please enter valid password!</p>}
           </div>
           <span></span>
           <button type="submit" className="sign-btn" onClick={handleSubmit}>

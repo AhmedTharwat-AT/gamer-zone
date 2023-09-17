@@ -5,6 +5,7 @@ import Library from "./components/Library";
 import Content from "./components/Content";
 import Footer from "./components/Footer";
 import ImagesOverlay from "./components/ImagesOverlay";
+import Swal from "sweetalert2";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -77,13 +78,23 @@ function App() {
   useEffect(() => {
     getData().then((d) => setData(d));
     setLogged(JSON.parse(localStorage.getItem("logged")));
+    logged && initialLibraryGames();
   }, []);
 
   //add or remove game from library
   useEffect(() => {
-    if (!logged || !addedGame) return;
-    const data = JSON.parse(localStorage.getItem("logged")).library;
-    console.log(data);
+    if (!addedGame) return;
+    if (!logged) {
+      Swal.fire({
+        icon: "info",
+        title: `You need to login first! `,
+        showConfirmButton: true,
+        confirmButtonText: "Sign Up",
+        confirmButtonColor: "green",
+      }).then((result) => result.isConfirmed && setShowSignUp(true));
+      return;
+    }
+    const data = JSON.parse(localStorage.getItem("logged"))?.library;
     const gameIndex = data.findIndex((el) => el.id === addedGame.id);
     gameIndex === -1 ? data.push(addedGame) : data.splice(gameIndex, 1);
     const newLogged = { ...logged, library: data };
@@ -132,6 +143,10 @@ function App() {
     currGame && setCurrGame(null);
     showSignUp && setShowSignUp(false);
   }
+  function handleFilter(url) {
+    getData(url).then((d) => setData(d));
+    setResetPageToOne(true);
+  }
 
   function handleShowSignUp() {
     setShowSignUp(true);
@@ -140,25 +155,40 @@ function App() {
     showLogin && setShowLogin(false);
   }
 
-  function handleFilter(url) {
-    getData(url).then((d) => setData(d));
-    setResetPageToOne(true);
-  }
-
   function handleLogin(loginUser) {
     localStorage.setItem("logged", JSON.stringify(loginUser));
     setLogged(loginUser);
     setShowLogin(false);
     setShowSignUp(false);
     initialLibraryGames();
+    Swal.fire({
+      icon: "success",
+      title: `Welcome ,${loginUser.name}`,
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+    });
   }
 
   function handleSignOut() {
-    localStorage.setItem("logged", null);
-    setLogged(null);
-    currGame && setCurrGame(null);
-    showLibrary && setShowLibrary(false);
-    libraryGames && setLibraryGames(null);
+    Swal.fire({
+      title: "Signing Out?",
+      text: "Are you sure to continue!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "green",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.setItem("logged", null);
+        setLogged(null);
+        currGame && setCurrGame(null);
+        showLibrary && setShowLibrary(false);
+        libraryGames && setLibraryGames(null);
+      }
+    });
   }
 
   return (

@@ -65,6 +65,19 @@ input:focus {
   outline: none;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--main-color);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--trd-color);
+  border-radius: 12px;
+}
+
 .dark-mode {
   position: relative;
   border: 1px solid var(--font-color);
@@ -121,6 +134,15 @@ input:focus {
 .underline-high:hover,
 .underline-low:hover {
   opacity: 0.7;
+}
+
+/* sweet alert */
+
+.timer-bar-false {
+  background-color: red;
+}
+.timer-bar-true {
+  background-color: green;
 }
 
 /* -------------------------------------------------------------------------------------------------- */
@@ -677,17 +699,14 @@ input:focus {
 }
 
 .game-info-hidden div {
-  border-bottom: 1px solid var(--main-color);
-  padding-bottom: 17px;
-  margin-bottom: 15px;
   display: flex;
   justify-content: space-between;
 }
 
-.game-info-hidden div:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-  margin-bottom: 0;
+.game-info-hidden div:not(:last-child) {
+  border-bottom: 1px solid #fff;
+  padding-bottom: 17px;
+  margin-bottom: 15px;
 }
 
 .add-fav-btn {
@@ -1877,19 +1896,20 @@ input:focus {
   align-items: center;
   gap: 25px;
   background-color: var(--sec-color);
-  padding: 3px 18px;
+  padding: 2px 15px;
   border-radius: 7px;
   cursor: pointer;
   position: relative;
 }
 .filter > div > h2 {
-  font-size: 1.2rem;
+  font-size: 1rem;
   transition: all 0.3s;
   color: #fff;
+  letter-spacing: 1px;
 }
 @media (max-width: 500px) {
   .filter > div > h2 {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   .filter > div {
     gap: 15px;
@@ -1914,12 +1934,12 @@ input:focus {
   left: 0;
   transform: scaleY(0);
   transform-origin: top;
-  width: 110%;
+  width: 115%;
   background-color: #ddd;
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  padding: 8px 5px 12px 9px;
+  gap: 4px;
+  padding: 8px 11px 12px 11px;
   border-radius: 7px;
   z-index: 100;
   transition: 0.3s;
@@ -1935,11 +1955,14 @@ input:focus {
 .filter > div > div > span {
   transition: inherit;
   color: #000;
-  border-bottom: 1px solid transparent;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  padding: 2px;
+  border-radius: 7px;
 }
 .filter > div > div > span:not(:first-child):hover {
   padding-left: 5px;
-  border-bottom: 1px solid gray;
+  background-color: #bbb;
 }
 
 .filter-top {
@@ -1952,7 +1975,7 @@ input:focus {
 
 .filter-top h2 {
   color: #777;
-  font-size: 1.28rem;
+  font-size: 1.1rem;
 }
 
 .close-filter {
@@ -2112,6 +2135,11 @@ input:focus {
 
 .sign-btn:hover {
   background-color: var(--trd-color);
+}
+
+/* sign validation */
+.sign-input p {
+  color: #b33a3a;
 }
 
 /* footer-------------------------------------- */

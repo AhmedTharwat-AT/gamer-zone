@@ -100,7 +100,7 @@ export default function Game({ game, onClickGame, libraryGames = null }) {
           </div>
           <h1> {game.name}</h1>
           <button className={`add-fav-btn ${isAddedToLibrary ? "added" : ""}`}>
-            {isAddedToLibrary ? game.added : "+" + game.added}
+            {isAddedToLibrary ? game.added + 1 : "+" + game.added}
           </button>
           <div className="info-hidden-wrapper">
             <div className="game-info-hidden">
