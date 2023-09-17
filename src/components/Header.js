@@ -15,6 +15,7 @@ export default function Header({
   showSignUp,
   logged,
   handleSignOut,
+  handleShowUser,
 }) {
   const [isDark, setIsDark] = useState(true);
   const [searchInput, setSearchInput] = useState("");
@@ -150,7 +151,10 @@ export default function Header({
         <li className="header-tabs">
           {logged?.name ? (
             <>
-              <span className="welcome-user">Welcome , {logged.name}</span>
+              <div className="welcome-user" onClick={handleShowUser}>
+                <img src={logged.img}></img>
+                <span className="nav-btn">Welcome , {logged.name}</span>
+              </div>
               <span
                 className={`nav-btn ${showLibrary && "selected"}`}
                 onClick={() => handleShowLibrary(true)}

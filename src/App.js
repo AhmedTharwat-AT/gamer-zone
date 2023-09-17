@@ -28,6 +28,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
+import User from "./components/User";
 library.add(
   fab,
   faPlaystation,
@@ -59,6 +60,7 @@ function App() {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [logged, setLogged] = useState(null);
+  const [showUser, setShowUser] = useState(false);
 
   async function getData(
     url = `https://rawg.io/api/games?key=${Apikey}&page=1&page_size=16`
@@ -111,12 +113,13 @@ function App() {
   function resetData() {
     if (data?.count < 852000 || data.previous)
       getData().then((d) => setData(d));
+    setResetPageToOne(true);
     searchName && setSearchName("");
     currGame && setCurrGame(null);
-    setResetPageToOne(true);
-    setShowLibrary(false);
-    setShowSignUp(false);
-    setShowLogin(false);
+    showLibrary && setShowLibrary(false);
+    showSignUp && setShowSignUp(false);
+    showLogin && setShowLogin(false);
+    showUser && setShowUser(false);
   }
 
   //fetch page data
@@ -132,7 +135,7 @@ function App() {
         setAddedGame(d);
       } else {
         setCurrGame(d);
-        setShowLibrary(false);
+        showLibrary && setShowLibrary(false);
         window.scrollTo(0, 0);
       }
     });
@@ -142,6 +145,7 @@ function App() {
     setShowLibrary(show);
     currGame && setCurrGame(null);
     showSignUp && setShowSignUp(false);
+    showUser && setShowUser(false);
   }
   function handleFilter(url) {
     getData(url).then((d) => setData(d));
@@ -187,8 +191,15 @@ function App() {
         currGame && setCurrGame(null);
         showLibrary && setShowLibrary(false);
         libraryGames && setLibraryGames(null);
+        showUser && setShowUser(false);
       }
     });
+  }
+
+  function handleShowUser() {
+    setShowUser(true);
+    showLibrary && setShowLibrary(false);
+    currGame && setCurrGame(null);
   }
 
   return (
@@ -222,6 +233,7 @@ function App() {
               showSignUp={showSignUp}
               logged={logged}
               handleSignOut={handleSignOut}
+              handleShowUser={handleShowUser}
             />
             {showLogin ? (
               <Login handleLogin={handleLogin} />
@@ -229,12 +241,14 @@ function App() {
               <SignUp setShowLogin={setShowLogin} />
             ) : (
               <div className="main">
-                <Sidebar />
+                <Sidebar resetData={resetData} logged={logged} />
                 {showLibrary ? (
                   <Library
                     onClickGame={handleClickGame}
                     libraryGames={libraryGames}
                   />
+                ) : showUser ? (
+                  <User logged={logged} />
                 ) : (
                   <Content
                     Apikey={Apikey}

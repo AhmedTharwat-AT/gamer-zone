@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Swal from "sweetalert2";
 export default function SignUp({ setShowLogin }) {
+  const uniqueId = crypto.randomUUID();
   const [signedUser, setSignedUser] = useState({
+    id: uniqueId,
     name: "",
     pass: "",
+    img: `https://picsum.photos/seed/${uniqueId}/200/200`,
     library: [],
   });
   const [notValid, setNotValid] = useState(false);
@@ -31,6 +34,7 @@ export default function SignUp({ setShowLogin }) {
       setNotValid(true);
       return;
     }
+    if (signedUser.name.length < 4) return;
     if (checkUserAlreadyExist()) {
       popup.fire({
         icon: "error",
@@ -66,8 +70,12 @@ export default function SignUp({ setShowLogin }) {
               }
               value={signedUser.name}
             ></input>
-            {notValid && !signedUser.name && (
+            {notValid && !signedUser.name ? (
               <p>Please enter valid username!</p>
+            ) : signedUser.name && signedUser.name.length < 4 ? (
+              <p>Username min length is 4 chars!</p>
+            ) : (
+              <></>
             )}
           </div>
           <div className="sign-input">
