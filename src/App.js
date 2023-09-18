@@ -72,16 +72,27 @@ function App() {
 
   //set library games if exist
   function initialLibraryGames() {
-    const lib = JSON.parse(localStorage.getItem("logged")).library;
+    const lib = JSON.parse(localStorage.getItem("logged"))?.library;
     lib && setLibraryGames(lib);
   }
 
   //set initial data
   useEffect(() => {
     getData().then((d) => setData(d));
-    setLogged(JSON.parse(localStorage.getItem("logged")));
-    logged && initialLibraryGames();
+    const isLogged = JSON.parse(localStorage.getItem("logged"));
+    setLogged(isLogged);
+    isLogged && initialLibraryGames();
   }, []);
+
+  //update logged user in local storage
+  function UpdateUsers(newLogged) {
+    localStorage.setItem("logged", JSON.stringify(newLogged));
+    const users = JSON.parse(localStorage.getItem("users"));
+    const newUsers = users.map((el) =>
+      el.name === newLogged.name ? newLogged : el
+    );
+    localStorage.setItem("users", JSON.stringify(newUsers));
+  }
 
   //add or remove game from library
   useEffect(() => {
@@ -100,12 +111,7 @@ function App() {
     const gameIndex = data.findIndex((el) => el.id === addedGame.id);
     gameIndex === -1 ? data.push(addedGame) : data.splice(gameIndex, 1);
     const newLogged = { ...logged, library: data };
-    localStorage.setItem("logged", JSON.stringify(newLogged));
-    const users = JSON.parse(localStorage.getItem("users"));
-    const newUsers = users.map((el) =>
-      el.name === newLogged.name ? newLogged : el
-    );
-    localStorage.setItem("users", JSON.stringify(newUsers));
+    UpdateUsers(newLogged);
     setLibraryGames(data);
   }, [addedGame]);
 
@@ -248,7 +254,11 @@ function App() {
                     libraryGames={libraryGames}
                   />
                 ) : showUser ? (
-                  <User logged={logged} />
+                  <User
+                    logged={logged}
+                    setLogged={setLogged}
+                    UpdateUsers={UpdateUsers}
+                  />
                 ) : (
                   <Content
                     Apikey={Apikey}

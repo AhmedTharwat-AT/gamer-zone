@@ -8,6 +8,7 @@ export default function SignUp({ setShowLogin }) {
     pass: "",
     img: `https://picsum.photos/seed/${uniqueId}/200/200`,
     library: [],
+    cover: "",
   });
   const [notValid, setNotValid] = useState(false);
 
